@@ -74,8 +74,8 @@ const StartBuild = () => {
   };
 
   const handleReset = () => {
-    setActiveStep(0);
     setOpen(false);
+    setActiveStep(0);
   };
 
 
@@ -85,12 +85,10 @@ const StartBuild = () => {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Create a new build</DialogTitle>
         <DialogContent>
-
           {/* <DialogContentText>
             To subscribe to this website, please enter your email address here.
             We will send updates occasionally.
           </DialogContentText>
-          
           <TextField
             autoFocus
             margin="dense"
