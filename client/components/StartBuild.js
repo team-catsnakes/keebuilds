@@ -6,17 +6,28 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import '../scss/styles.scss';
-
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import Typography from '@mui/material/Typography';
+import { FormControlLabel } from '@mui/material';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
+import '../scss/styles.scss';
 
 
 const steps = ['Case size', 'PCB', 'Plate', 'Switches', 'Keycaps'];
 
+const options = [
+  ['60%', '65%', '75%', 'TKL', '100%'],
+  ['Hotswap', 'Traditional'],
+  ['Polycarbonate', 'Aluminum', 'Brass'],
+  ['Linear', 'Tactile', 'Clicky'],
+  ['GMK', 'KAT', 'PBT']
+];
 
 const StartBuild = () => {
 
@@ -79,25 +90,29 @@ const StartBuild = () => {
   };
 
 
+  // radio buttons
+  const [value, setValue] = React.useState('female');
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+
+  const getContent = (activeStep) => {
+    const radios = [];
+    for (let i = 0; i < options[activeStep].length; i++) {
+      radios.push(
+        <FormControlLabel value={options[activeStep][i]} control={<Radio />} label={options[activeStep][i]}/>
+      );
+    }
+    return radios;
+  };
+
   return (
     <div className="startBuild">
       <Button sx={{ width: '200px', color: 'rgb(65, 91, 152)' }} variant="outlined" onClick={handleClickOpen}>Start Build</Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Create a new build</DialogTitle>
         <DialogContent>
-          {/* <DialogContentText>
-            To subscribe to this website, please enter your email address here.
-            We will send updates occasionally.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Email Address"
-            type="email"
-            fullWidth
-            variant="standard"
-          /> */}
           <div>
             <Box sx={{ width: '100%' }}>
               <Stepper activeStep={activeStep}>
@@ -132,7 +147,17 @@ const StartBuild = () => {
               ) : (
                 <React.Fragment>
                   <Typography sx={{ mt: 2, mb: 1 }}>
-                    Step {activeStep + 1}
+                    <FormControl>
+                      <FormLabel id="demo-controlled-radio-buttons-group">{steps[activeStep]}</FormLabel>
+                      <RadioGroup
+                        aria-labelledby="demo-controlled-radio-buttons-group"
+                        name="controlled-radio-buttons-group"
+                        value={value}
+                        onChange={handleChange}
+                      >
+                        {getContent(activeStep)}
+                      </RadioGroup>
+                    </FormControl>
                   </Typography>
                   <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                     <Button
@@ -160,10 +185,6 @@ const StartBuild = () => {
           </div>
 
         </DialogContent>
-        <DialogActions>
-          {/* <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Subscribe</Button> */}
-        </DialogActions>
       </Dialog>
     </div>
   );
