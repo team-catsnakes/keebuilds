@@ -13,7 +13,7 @@ CREATE TABLE public.build (
     "_id" serial   NOT NULL,
     "session" bigint NOT NULL,
     "name" varchar   NOT NULL,
-    "case" bigint   NOT NULL,
+    "size" bigint   NOT NULL,
     "pcb" bigint   NOT NULL,
     "plate" bigint   NOT NULL,
     "switch" bigint   NOT NULL,
@@ -68,11 +68,11 @@ CREATE TABLE public.switch (
   OIDS=FALSE
 );
 
-CREATE TABLE public.case (
+CREATE TABLE public.size (
     "_id" serial   NOT NULL,
     "name" varchar   NOT NULL,
     "link" varchar,
-    CONSTRAINT "pk_case" PRIMARY KEY (
+    CONSTRAINT "pk_size" PRIMARY KEY (
         "_id"
      )
 ) WITH (
@@ -90,8 +90,8 @@ CREATE TABLE public.plate (
   OIDS=FALSE
 );
 
-ALTER TABLE public.build ADD CONSTRAINT "fk_build_case" FOREIGN KEY("case")
-REFERENCES public.case ("_id");
+ALTER TABLE public.build ADD CONSTRAINT "fk_build_size" FOREIGN KEY("size")
+REFERENCES public.size ("_id");
 
 ALTER TABLE public.build ADD CONSTRAINT "fk_build_session" FOREIGN KEY("session")
 REFERENCES public.session ("_id");
@@ -113,11 +113,11 @@ REFERENCES public.keycap ("_id");
 INSERT INTO public.session VALUES (1);
 
 -- Populating Case Table
-INSERT INTO public.case (_id, name) VALUES (1, '60%');
-INSERT INTO public.case (_id, name) VALUES (2, '65%');
-INSERT INTO public.case (_id, name) VALUES (3, '70%');
-INSERT INTO public.case (_id, name) VALUES (4, 'TKL');
-INSERT INTO public.case (_id, name) VALUES (5, '100%');
+INSERT INTO public.size (_id, name) VALUES (1, '60%');
+INSERT INTO public.size (_id, name) VALUES (2, '65%');
+INSERT INTO public.size (_id, name) VALUES (3, '70%');
+INSERT INTO public.size (_id, name) VALUES (4, 'TKL');
+INSERT INTO public.size (_id, name) VALUES (5, '100%');
 
 -- Populating PCB Table
 INSERT INTO public.pcb (_id, name) VALUES (1, 'Hotswap');
