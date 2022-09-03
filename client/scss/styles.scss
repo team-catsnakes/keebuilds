@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2&family=Gochi+Hand&family=Rock+Salt&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Turret+Road:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Walter+Turncoat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Swanky+and+Moo+Moo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap');
+
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60%;
+}
+
+.logo {
+    font-size: 180px;
+    color: rgb(65, 91, 152);
+    // font-family: 'Press Start 2P', cursive;
+    // font-family: 'Gloria Hallelujah', cursive;
+    // font-family: 'Concert One', cursive;
+    // font-family: 'Orbitron', sans-serif;
+    // font-family: 'Gochi Hand', cursive;
+    // font-family: 'Turret Road', cursive;
+    // font-family: 'Walter Turncoat', cursive;
+    font-family: 'Swanky and Moo Moo', cursive;
+    // font-family: 'Architects Daughter', cursive;
+    // font-family: 'Shadows Into Light', cursive;
+    // font-family: 'Amatic SC', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+}
+
+.startBuildButtonDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: -50%;
+    margin-top: -200px;
+}
+
+.savedBuildsButtonDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+}
