@@ -118,3 +118,7 @@ node_modules/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+build/bundle.js
+build/index.html
+build/bundle.js.LICENSE.txt
