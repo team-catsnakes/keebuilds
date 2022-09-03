@@ -2,44 +2,51 @@ const db = require('../models/keebuildsModel');
 
 const errorCreator = (methodName, description) => ({
   log: `Error occurred in keebuildsController.${methodName}.\nDescription: ${description}`,
-  message: `Error occurred in keebuildsController.${methodName}. See server logs for more details.`
+  message: `Error occurred in keebuildsController.${methodName}. See server logs for more details.`,
 });
 
 const generateInnerSelect = (k, v) => {
-  if(k === 'switchType') return `(SELECT _id FROM 'switch' WHERE name='${v}')`;
-  return `(SELECT _id FROM '${k}' WHERE name='${v}')`;
+  console.log(k, v);
+  if (k === 'switchType') return `(SELECT _id FROM switch WHERE name='${v}')`;
+  return `(SELECT _id FROM ${k} WHERE name='${v}'), `;
 };
 
 const keebuildsController = {};
 
 keebuildsController.getBuildsForSession = (req, res, next) => {
-  const queryString = `SELECT * FROM builds WHERE session=${req.query.id}`;
+  //size, pcb, switch, plate, keycap need to be queried by Joining
+  const queryString = `SELECT build.name, build.color, s.name as size, pcb.name as pcb, switch.name as switch, plate.name as plate, k.name as keycap FROM build INNER JOIN size s ON build.size=s._id INNER JOIN pcb ON build.pcb=pcb._id INNER JOIN switch ON build.switch=switch._id INNER JOIN plate ON build.plate=plate._id INNER JOIN keycap k ON build.keycap=k._id WHERE session=${req.query.id};`;
   db.query(queryString)
-    .then(result => result.rows)
-    .then(result => {
+    .then((result) => result.rows)
+    .then((result) => {
       res.locals.builds = result;
     })
     .then(() => next())
-    .catch(() => next(errorCreator('getBuildsForSession', 'Error fetching builds from DB')));
+    .catch(() =>
+      next(errorCreator('getBuildsForSession', 'Error fetching builds from DB'))
+    );
 };
 
 keebuildsController.createBuild = (req, res, next) => {
-  const {session, name, size, pcb, plate, keycap, color} = req.body;
+  console.log(req.body);
+  const { session, name, size, pcb, plate, keycap, color } = req.body;
   const switchType = req.body.switch;
-
-  const rowsRequiringSelect = {size, pcb, plate, keycap, switchType};
-  
+  console.log('we are here');
+  const rowsRequiringSelect = { size, pcb, plate, keycap, switchType };
+  console.log(rowsRequiringSelect);
   let query = `INSERT INTO build (session, name, color, size, pcb, plate, keycap, switch) VALUES (${session}, '${name}', '${color}', `;
-  for(const [k,v] of rowsRequiringSelect){
+  console.log(query);
+  for (const [k, v] of Object.entries(rowsRequiringSelect)) {
+    console.log(k, v);
     query = query + generateInnerSelect(k, v);
+    console.log(query);
   }
   query = query + ')';
   console.log(query);
   db.query(query)
-    .then(dbResponse => res.locals.dbResponse = dbResponse)
+    .then((dbResponse) => (res.locals.dbResponse = dbResponse.rowCount))
     .then(() => next())
     .catch(() => errorCreator('createBuild', 'Failed to insert Build'));
 };
 
 module.exports = keebuildsController;
-
