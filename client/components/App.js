@@ -1,8 +1,9 @@
 import React from "react";
+import StartBuild from "./StartBuild";
 import "../scss/styles.scss";
 
 const App = () => (
-  <div>bye world</div>
+  <StartBuild/>
 );
 
 export default App;
