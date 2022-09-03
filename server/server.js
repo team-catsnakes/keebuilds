@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const cors = require('cors');
 const PORT = process.env.PORT || 3000;
-
+const keebuildsController = require('./controllers/keebuildsController');
 app.use(cors());
 app.use(express.json());
 
@@ -20,21 +20,16 @@ const buildRouter = express.Router();
 app.use('/', buildRouter);
 
 // Post a build to the database
-buildRouter.post(
-  '/build',
-  /*PostController*/
-  (req, res) => {
-    return res.status(200).json(res.locals.data);
-  }
-);
-
-//Getting sessions
+buildRouter.post('/build', keebuildsController.createBuild, (req, res) => {
+  return res.status(201).json(res.locals.dbResponse);
+});
 
 //Get build from database
 buildRouter.get(
-  '/sessions:id',
-  /*GetController*/ (req, res) => {
-    return res.status(200).send('hello');
+  '/sessions',
+  keebuildsController.getBuildsForSession,
+  (req, res) => {
+    return res.status(200).json(res.locals.builds);
   }
 );
 // catch all handler for all unknown routes
