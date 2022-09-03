@@ -1,55 +1,47 @@
-const webpack = require("webpack");
-const path = require("path");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { webpack } = require('webpack');
 
-const config = {
-  entry: ["react-hot-loader/patch", "./src/index.js"],
+module.exports = {
+  mode: process.env.NODE_ENV,
+  entry: path.resolve(__dirname, './client/index.js'),
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "bundle.js",
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        use: "babel-loader",
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
-      },
-      {
-        test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
-      },
-      {
-        test: /\.png$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              mimetype: "image/png",
-            },
-          },
-        ],
-      },
-    ],
+    path: path.resolve(__dirname, './build'),
+    filename: 'bundle.js',
+    publicPath: '/build'
   },
   devServer: {
     static: {
-      directory: "./dist",
+      directory: path.resolve(__dirname, './build'),
+      publicPath: '/',
     },
+    proxy: {
+      '/api':'http://localhost:3000',
+    },
+    compress: false,
+    host: 'localhost',
+    port: 8080,
+    hot: true,
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      templateContent: ({ htmlWebpackPlugin }) =>
-        '<!DOCTYPE html><html><head><meta charset="utf-8"><title>' +
-        htmlWebpackPlugin.options.title +
-        '</title></head><body><div id="app"></div></body></html>',
-      filename: "index.html",
-    }),
-  ],
-};
-
-module.exports = config;
+  plugins: [new HtmlWebpackPlugin({ template: './client/index.html' })],
+  module: {
+    rules: [
+      // babel rules
+      {
+        test: /\.jsx?/,
+        exclude: /(node_modules)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          }
+        }
+      },
+      // css rules
+      {
+        test: /\.s[ac]ss$/i,
+        use: ['style-loader', 'css-loader', 'sass-loader']
+      }
+    ]
+  }
+}
