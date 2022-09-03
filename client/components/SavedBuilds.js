@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import '../scss/styles.scss';
 
-const StartBuild = () => {
+const SavedBuilds = () => {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -21,7 +21,7 @@ const StartBuild = () => {
 
   return (
     <div className="startBuild">
-      <Button sx={{ width: '200px', color: 'rgb(65, 91, 152)' }} variant="outlined" onClick={handleClickOpen}>Start Build</Button>
+      <Button sx={{ width: '200px', color: 'rgb(65, 91, 152)' }} variant="outlined" onClick={handleClickOpen}>Saved Keebs</Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Subscribe</DialogTitle>
         <DialogContent>
@@ -48,4 +48,4 @@ const StartBuild = () => {
   );
 };
 
-export default StartBuild;
+export default SavedBuilds;
