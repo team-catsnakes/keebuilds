@@ -11,10 +11,32 @@ app.use(express.json());
 if (process.env.NODE_ENV !== 'development') {
   app.use('/build', express.static(path.resolve(__dirname, '../build')));
   app.get('/', (req, res) => {
-    return res.status(200).sendFile(path.resolve(__dirname, '../build/index.html'));
+    return res
+      .status(200)
+      .sendFile(path.resolve(__dirname, '../build/index.html'));
   });
 }
+const buildRouter = express.Router();
+app.use('/', buildRouter);
 
+// Post a build to the database
+buildRouter.post(
+  '/build',
+  /*PostController*/
+  (req, res) => {
+    return res.status(200).json(res.locals.data);
+  }
+);
+
+//Getting sessions
+
+//Get build from database
+buildRouter.get(
+  '/sessions:id',
+  /*GetController*/ (req, res) => {
+    return res.status(200).send('hello');
+  }
+);
 // catch all handler for all unknown routes
 app.use((req, res) => {
   res.status(404).send('404');
