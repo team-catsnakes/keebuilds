@@ -15,7 +15,6 @@ const keebuildsController = {};
 keebuildsController.getBuildsForSession = (req, res, next) => {
   //size, pcb, switch, plate, keycap need to be queried by Joining
   const queryString = `SELECT build.name, build.color, s.name as size, pcb.name as pcb, switch.name as switch, plate.name as plate, k.name as keycap FROM build INNER JOIN size s ON build.size=s._id INNER JOIN pcb ON build.pcb=pcb._id INNER JOIN switch ON build.switch=switch._id INNER JOIN plate ON build.plate=plate._id INNER JOIN keycap k ON build.keycap=k._id WHERE session=${req.query.id};`;
-  console.log(queryString);
   db.query(queryString)
     .then((result) => result.rows)
     .then((result) => {
