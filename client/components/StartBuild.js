@@ -1,10 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
@@ -18,9 +15,9 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import '../scss/styles.scss';
 
-
+// stepper labels
 const steps = ['Case size', 'PCB', 'Plate', 'Switches', 'Keycaps'];
-
+// radio button groups for each step
 const options = [
   ['60%', '65%', '75%', 'TKL', '100%'],
   ['Hotswap', 'Traditional'],
@@ -30,78 +27,85 @@ const options = [
 ];
 
 const StartBuild = () => {
-
-  // dialogue form 
+  // saving state of selected build
+  const [build, setBuild] = React.useState({
+    0: '',
+    1: '',
+    2: '',
+    3: '',
+    4: '',
+  });
+  // state to open and close dialogue form
   const [open, setOpen] = React.useState(false);
+  // state for current step user is on
+  const [activeStep, setActiveStep] = React.useState(0);
+  // state for selected value of each radio group
+  const [value, setValue] = React.useState('');
+  // handles opening of dialogue form
+  const handleClickOpen = () => setOpen(true);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
+  // handles closing of dialogue form
   const handleClose = () => {
     setOpen(false);
-  };
-
-  // stepper
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [skipped, setSkipped] = React.useState(new Set());
-
-  const isStepOptional = (step) => {
-    return step === -1;
-  };
-
-  const isStepSkipped = (step) => {
-    return skipped.has(step);
-  };
-
-  const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleSkip = () => {
-    if (!isStepOptional(activeStep)) {
-      // You probably want to guard against something like this,
-      // it should never occur unless someone's actively trying to break something.
-      throw new Error('You can\'t skip a step that isn\'t optional.');
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped((prevSkipped) => {
-      const newSkipped = new Set(prevSkipped.values());
-      newSkipped.add(activeStep);
-      return newSkipped;
+    setActiveStep(0);
+    setBuild({
+      0: '',
+      1: '',
+      2: '',
+      3: '',
+      4: '',
     });
   };
 
-  const handleReset = () => {
-    setOpen(false);
-    setActiveStep(0);
+  const handleNext = () => {
+    console.log('activeStep:', activeStep);
+    if (activeStep === 4) {
+      // send post request
+    }
+    // save current selected value to build state when clicking next
+    setBuild({
+      ...build,
+      [activeStep]: value
+    });
+    setValue('');
+    setActiveStep(activeStep + 1);
   };
 
+  console.log('build: ', build);
 
-  // radio buttons
-  const [value, setValue] = React.useState('female');
+  const handleBack = () => {
+    setActiveStep(activeStep - 1);
+    setValue('');
+  };
 
+  const handleReset = () => {
+    // closes dialogue form when clicking "close"
+    setOpen(false);
+    setActiveStep(0);
+    setValue('');
+    // resets state of build for new build
+    setBuild({
+      0: '',
+      1: '',
+      2: '',
+      3: '',
+      4: '',
+    });
+  };
+
+  // sets current value for selected radio button
   const handleChange = (event) => {
     setValue(event.target.value);
   };
 
+  console.log('selected radio value:', value);
+
+  // renders radio buttons for each step in stepper
   const getContent = (activeStep) => {
     const radios = [];
     for (let i = 0; i < options[activeStep].length; i++) {
       radios.push(
-        <FormControlLabel value={options[activeStep][i]} control={<Radio />} label={options[activeStep][i]}/>
+        <FormControlLabel value={options[activeStep][i]} control={<Radio/>} label={options[activeStep][i]}/>
       );
     }
     return radios;
@@ -116,20 +120,10 @@ const StartBuild = () => {
           <div>
             <Box sx={{ width: '100%' }}>
               <Stepper activeStep={activeStep}>
-                {steps.map((label, index) => {
-                  const stepProps = {};
-                  const labelProps = {};
-                  if (isStepOptional(index)) {
-                    labelProps.optional = (
-                      <Typography variant="caption">Optional</Typography>
-                    );
-                  }
-                  if (isStepSkipped(index)) {
-                    stepProps.completed = false;
-                  }
+                {steps.map(label => {
                   return (
-                    <Step key={label} {...stepProps}>
-                      <StepLabel {...labelProps}>{label}</StepLabel>
+                    <Step key={label}>
+                      <StepLabel>{label}</StepLabel>
                     </Step>
                   );
                 })}
@@ -148,7 +142,7 @@ const StartBuild = () => {
                 <React.Fragment>
                   <Typography sx={{ mt: 2, mb: 1 }}>
                     <FormControl>
-                      <FormLabel id="demo-controlled-radio-buttons-group">{steps[activeStep]}</FormLabel>
+                      <FormLabel id="demo-controlled-radio-buttons-group">Select {activeStep === 1 ? steps[activeStep] : steps[activeStep].toLowerCase()}:</FormLabel>
                       <RadioGroup
                         aria-labelledby="demo-controlled-radio-buttons-group"
                         name="controlled-radio-buttons-group"
@@ -166,16 +160,10 @@ const StartBuild = () => {
                       onClick={handleBack}
                       sx={{ mr: 1 }}
                     >
-              Back
+                    Back
                     </Button>
                     <Box sx={{ flex: '1 1 auto' }} />
-                    {isStepOptional(activeStep) && (
-                      <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                Skip
-                      </Button>
-                    )}
-
-                    <Button onClick={handleNext}>
+                    <Button onClick={handleNext} disabled={!value}>
                       {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                     </Button>
                   </Box>
@@ -183,7 +171,6 @@ const StartBuild = () => {
               )}
             </Box>
           </div>
-
         </DialogContent>
       </Dialog>
     </div>
