@@ -29,6 +29,8 @@ const options = [
   ['GMK', 'KAT', 'PBT']
 ];
 
+const finalBuild = {};
+
 const StartBuild = () => {
 
   // dialogue form 
@@ -40,6 +42,7 @@ const StartBuild = () => {
 
   const handleClose = () => {
     setOpen(false);
+    setActiveStep(0);
   };
 
   // stepper
@@ -63,10 +66,31 @@ const StartBuild = () => {
 
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
+
+    switch(activeStep){
+    case 0:
+      finalBuild['size'] = value;
+      break;
+    case 1:
+      finalBuild['pcb'] = value;
+      break;
+    case 2:
+      finalBuild['plate'] = value;
+      break;
+    case 3:
+      finalBuild['switch'] = value;
+      break;
+    case 4:
+      finalBuild['keycap'] = value;
+      break;  
+    }
+    setValue('');
+    console.log(finalBuild);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setValue('');
   };
 
   const handleSkip = () => {
@@ -87,21 +111,24 @@ const StartBuild = () => {
   const handleReset = () => {
     setOpen(false);
     setActiveStep(0);
+    setValue('');
   };
 
 
   // radio buttons
-  const [value, setValue] = React.useState('female');
+  const [value, setValue] = React.useState('');
+  console.log(value);
 
   const handleChange = (event) => {
     setValue(event.target.value);
+    
   };
 
   const getContent = (activeStep) => {
     const radios = [];
     for (let i = 0; i < options[activeStep].length; i++) {
       radios.push(
-        <FormControlLabel value={options[activeStep][i]} control={<Radio />} label={options[activeStep][i]}/>
+        <FormControlLabel value={options[activeStep][i]} control={<Radio required = { true } />} label={options[activeStep][i]}/>
       );
     }
     return radios;
@@ -148,10 +175,10 @@ const StartBuild = () => {
                 <React.Fragment>
                   <Typography sx={{ mt: 2, mb: 1 }}>
                     <FormControl>
-                      <FormLabel id="demo-controlled-radio-buttons-group">{steps[activeStep]}</FormLabel>
+                      <FormLabel id="demo-controlled-radio-buttons-group">Select {activeStep === 1 ? steps[activeStep] : steps[activeStep].toLowerCase()}</FormLabel>
                       <RadioGroup
-                        aria-labelledby="demo-controlled-radio-buttons-group"
-                        name="controlled-radio-buttons-group"
+                        
+                        name="nameRadio"
                         value={value}
                         onChange={handleChange}
                       >
@@ -175,7 +202,8 @@ const StartBuild = () => {
                       </Button>
                     )}
 
-                    <Button onClick={handleNext}>
+                    <Button onClick={handleNext} disabled = {!value}>
+
                       {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                     </Button>
                   </Box>
