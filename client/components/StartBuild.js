@@ -75,8 +75,20 @@ const StartBuild = () => {
 
   // having post request in handleNext doesnt catch last keycap value since state is set once the handleNext function ends
   React.useEffect(() => {
-    axios
-      .post('/api', {
+    // check to have post request run only for completed select
+    if (build[5] !== '') {
+      axios
+        .post('/api', {
+          size: build[0],
+          pcb: build[1],
+          plate: build[2],
+          switch: build[3],
+          keycap: build[4],
+          name: build[5],
+          color: 'blue',
+          session: 0
+        });
+      console.log('POST REQUEST: ', {
         size: build[0],
         pcb: build[1],
         plate: build[2],
@@ -86,16 +98,8 @@ const StartBuild = () => {
         color: 'blue',
         session: 0
       });
-    console.log('POST REQUEST: ', {
-      size: build[0],
-      pcb: build[1],
-      plate: build[2],
-      switch: build[3],
-      keycap: build[4],
-      name: build[5],
-      color: 'blue',
-      session: 0
-    });
+    }
+    // do not put check in parameter, will run with extra post request when build[5] changes back to ''
   }, [build[5]]);
 
   console.log('build: ', build);
