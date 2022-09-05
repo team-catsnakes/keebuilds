@@ -99,6 +99,12 @@ const StartBuild = () => {
         color: 'blue',
         session: 0
       });
+      // get request test
+      // const fetchBuilds = async () => {
+      //   const allBuilds = await axios.get('/api/session/0');
+      //   console.log('data from saved builds get request: ', allBuilds.data);
+      // };
+      // fetchBuilds();
     }
     // do not put check in parameter, will run with extra post request when build[5] changes back to ''
   }, [build[5]]);
