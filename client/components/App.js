@@ -3,13 +3,16 @@ import React from 'react';
 import StartBuild from './StartBuild';
 import SavedBuilds from './SavedBuilds';
 import '../scss/styles.scss';
+import logo from '../assets/bongocat.png';
 
 const App = () => (
   <div>
-    {/* <img src={bongocat} alt="Bongo Cat"/> */}
+    
     <h1 className='logo'>KEEBUILDS</h1>
+    {/* <img src={logo} alt="Bongo Cat" /> */}
     <div className='startBuildButtonDiv'><StartBuild/></div>
     <div className='savedBuildsButtonDiv'><SavedBuilds/></div>
+    
   </div>
 );
 

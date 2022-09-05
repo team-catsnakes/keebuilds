@@ -3,7 +3,7 @@ const app = express();
 const path = require('path');
 const cors = require('cors');
 const PORT = process.env.PORT || 3000;
-
+const keebuildsController = require('./controllers/keebuildsController');
 app.use(cors());
 app.use(express.json());
 
@@ -11,10 +11,27 @@ app.use(express.json());
 if (process.env.NODE_ENV !== 'development') {
   app.use('/build', express.static(path.resolve(__dirname, '../build')));
   app.get('/', (req, res) => {
-    return res.status(200).sendFile(path.resolve(__dirname, '../build/index.html'));
+    return res
+      .status(200)
+      .sendFile(path.resolve(__dirname, '../build/index.html'));
   });
 }
+const buildRouter = express.Router();
+app.use('/api', buildRouter);
 
+// Post a build to the database
+buildRouter.post('/build', keebuildsController.createBuild, (req, res) => {
+  return res.status(201).json(res.locals.dbResponse);
+});
+
+//Get build from database
+buildRouter.get(
+  '/session',
+  keebuildsController.getBuildsForSession,
+  (req, res) => {
+    return res.status(200).json(res.locals.builds);
+  }
+);
 // catch all handler for all unknown routes
 app.use((req, res) => {
   res.status(404).send('404');
