@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'development') {
   });
 }
 const buildRouter = express.Router();
-app.use('/', buildRouter);
+app.use('/api', buildRouter);
 
 // Post a build to the database
 buildRouter.post('/build', keebuildsController.createBuild, (req, res) => {
@@ -26,7 +26,7 @@ buildRouter.post('/build', keebuildsController.createBuild, (req, res) => {
 
 //Get build from database
 buildRouter.get(
-  '/sessions',
+  '/session',
   keebuildsController.getBuildsForSession,
   (req, res) => {
     return res.status(200).json(res.locals.builds);
