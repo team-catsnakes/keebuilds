@@ -51,6 +51,7 @@ const StartBuild = () => {
   const handleClose = () => {
     setOpen(false);
     setActiveStep(0);
+    setValue('');
     setBuild({
       0: '',
       1: '',
@@ -132,8 +133,8 @@ const StartBuild = () => {
 
   console.log('selected radio value:', value);
 
-  // renders radio buttons for each step in stepper
   const getContent = (activeStep) => {
+    // renders radio buttons for each step
     if (activeStep !== 5) {
       const radios = [];
       for (let i = 0; i < options[activeStep].length; i++) {
@@ -143,6 +144,7 @@ const StartBuild = () => {
       }
       return radios;
     }
+    // renders input field for build name
     return (
       <Box
         component="form"
