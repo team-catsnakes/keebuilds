@@ -14,10 +14,11 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import TextField from '@mui/material/TextField';
 import '../scss/styles.scss';
 
 // stepper labels
-const steps = ['Case size', 'PCB', 'Plate', 'Switches', 'Keycaps'];
+const steps = ['Case', 'PCB', 'Plate', 'Switches', 'Keycaps', 'Build'];
 // radio button groups for each step
 const options = [
   ['60%', '65%', '75%', 'TKL', '100%'],
@@ -35,6 +36,7 @@ const StartBuild = () => {
     2: '',
     3: '',
     4: '',
+    5: ''
   });
   // state to open and close dialogue form
   const [open, setOpen] = React.useState(false);
@@ -55,6 +57,7 @@ const StartBuild = () => {
       2: '',
       3: '',
       4: '',
+      5: ''
     });
   };
 
@@ -79,7 +82,7 @@ const StartBuild = () => {
         plate: build[2],
         switch: build[3],
         keycap: build[4],
-        name: 'my first build',
+        name: build[5],
         color: 'blue',
         session: 0
       });
@@ -89,11 +92,11 @@ const StartBuild = () => {
       plate: build[2],
       switch: build[3],
       keycap: build[4],
-      name: 'my first build',
+      name: build[5],
       color: 'blue',
       session: 0
     });
-  }, [build[4]]);
+  }, [build[5]]);
 
   console.log('build: ', build);
 
@@ -114,6 +117,7 @@ const StartBuild = () => {
       2: '',
       3: '',
       4: '',
+      5: ''
     });
   };
 
@@ -126,13 +130,34 @@ const StartBuild = () => {
 
   // renders radio buttons for each step in stepper
   const getContent = (activeStep) => {
-    const radios = [];
-    for (let i = 0; i < options[activeStep].length; i++) {
-      radios.push(
-        <FormControlLabel value={options[activeStep][i]} control={<Radio/>} label={options[activeStep][i]}/>
-      );
+    if (activeStep !== 5) {
+      const radios = [];
+      for (let i = 0; i < options[activeStep].length; i++) {
+        radios.push(
+          <FormControlLabel value={options[activeStep][i]} control={<Radio/>} label={options[activeStep][i]}/>
+        );
+      }
+      return radios;
     }
-    return radios;
+    return (
+      <Box
+        component="form"
+        sx={{
+          '& .MuiTextField-root': { m: 3, width: '55ch' },
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <div>
+          <TextField
+            id="outlined-required"
+            defaultValue=""
+            value={value}
+            onChange={handleChange}
+          />
+        </div>
+      </Box>
+    );
   };
 
   return (
@@ -166,7 +191,7 @@ const StartBuild = () => {
                 <React.Fragment>
                   <Typography sx={{ mt: 2, mb: 1 }}>
                     <FormControl>
-                      <FormLabel id="demo-controlled-radio-buttons-group">Select {activeStep === 1 ? steps[activeStep] : steps[activeStep].toLowerCase()}:</FormLabel>
+                      <FormLabel id="demo-controlled-radio-buttons-group">{activeStep === 1 ? `Select ${steps[activeStep]}: ` : activeStep === 5 ? 'Name your build!' : `Select ${steps[activeStep].toLowerCase()}: `}</FormLabel>
                       <RadioGroup
                         aria-labelledby="demo-controlled-radio-buttons-group"
                         name="controlled-radio-buttons-group"
