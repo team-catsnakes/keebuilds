@@ -26,14 +26,14 @@ CREATE TABLE public.build (
   OIDS=FALSE
 );
 
-CREATE TABLE public.session (
-    "_id" serial   NOT NULL,
-    CONSTRAINT "pk_session" PRIMARY KEY (
-        "_id"
-     )
-) WITH (
-  OIDS=FALSE
-);
+-- CREATE TABLE public.session (
+--     "_id" serial   NOT NULL,
+--     CONSTRAINT "pk_session" PRIMARY KEY (
+--         "_id"
+--      )
+-- ) WITH (
+--   OIDS=FALSE
+-- );
 
 CREATE TABLE public.pcb (
     "_id" serial   NOT NULL,
@@ -93,8 +93,8 @@ CREATE TABLE public.plate (
 ALTER TABLE public.build ADD CONSTRAINT "fk_build_size" FOREIGN KEY("size")
 REFERENCES public.size ("_id");
 
-ALTER TABLE public.build ADD CONSTRAINT "fk_build_session" FOREIGN KEY("session")
-REFERENCES public.session ("_id");
+-- ALTER TABLE public.build ADD CONSTRAINT "fk_build_session" FOREIGN KEY("session")
+-- REFERENCES public.session ("_id");
 
 ALTER TABLE public.build ADD CONSTRAINT "fk_build_pcb" FOREIGN KEY("pcb")
 REFERENCES public.pcb ("_id");
@@ -110,7 +110,7 @@ REFERENCES public.keycap ("_id");
 
 
 -- Creating Default Session
-INSERT INTO public.session VALUES (1);
+-- INSERT INTO public.session VALUES (1);
 
 -- Populating Case Table
 INSERT INTO public.size (_id, name) VALUES (1, '60%');
