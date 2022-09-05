@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
@@ -59,17 +60,40 @@ const StartBuild = () => {
 
   const handleNext = () => {
     console.log('activeStep:', activeStep);
-    if (activeStep === 4) {
-      // send post request
-    }
     // save current selected value to build state when clicking next
     setBuild({
       ...build,
       [activeStep]: value
     });
+
     setValue('');
     setActiveStep(activeStep + 1);
   };
+
+  // having post request in handleNext doesnt catch last keycap value since state is set once the handleNext function ends
+  React.useEffect(() => {
+    axios
+      .post('/api', {
+        size: build[0],
+        pcb: build[1],
+        plate: build[2],
+        switch: build[3],
+        keycap: build[4],
+        name: 'my first build',
+        color: 'blue',
+        session: 0
+      });
+    console.log('POST REQUEST: ', {
+      size: build[0],
+      pcb: build[1],
+      plate: build[2],
+      switch: build[3],
+      keycap: build[4],
+      name: 'my first build',
+      color: 'blue',
+      session: 0
+    });
+  }, [build[4]]);
 
   console.log('build: ', build);
 
