@@ -139,4 +139,4 @@ INSERT INTO public.keycap (_id, name) VALUES (1, 'GMK');
 INSERT INTO public.keycap (_id, name) VALUES (2, 'KAT');
 INSERT INTO public.keycap (_id, name) VALUES (3, 'PBT');
 
-INSERT INTO build (session, name, size, pcb, plate, switch, keycap, color) VALUES (1, 'Big Build', (SELECT _id FROM size WHERE name='60%'), (SELECT _id FROM pcb WHERE name='Hotswap'), (SELECT _id FROM plate WHERE name='Aluminum'), (SELECT _id FROM switch WHERE name='Linear'), (SELECT _id FROM keycap WHERE name='GMK'), 'green');
+INSERT INTO public.build (session, name, size, pcb, plate, switch, keycap, color) VALUES (1, 'Big Build', (SELECT _id FROM public.size WHERE name='60%'), (SELECT _id FROM public.pcb WHERE name='Hotswap'), (SELECT _id FROM public.plate WHERE name='Aluminum'), (SELECT _id FROM public.switch WHERE name='Linear'), (SELECT _id FROM public.keycap WHERE name='GMK'), 'green');

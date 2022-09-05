@@ -26,7 +26,7 @@ buildRouter.post('/build', keebuildsController.createBuild, (req, res) => {
 
 //Get build from database
 buildRouter.get(
-  '/session',
+  '/session/:id',
   keebuildsController.getBuildsForSession,
   (req, res) => {
     return res.status(200).json(res.locals.builds);
