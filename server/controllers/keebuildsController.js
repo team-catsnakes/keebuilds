@@ -6,15 +6,15 @@ const errorCreator = (methodName, description) => ({
 });
 
 const generateInnerSelect = (k, v) => {
-  if (k === 'switchType') return `(SELECT _id FROM switch WHERE name='${v}')`;
-  return `(SELECT _id FROM ${k} WHERE name='${v}'), `;
+  if (k === 'switchType') return `(SELECT _id FROM public.switch WHERE name='${v}')`;
+  return `(SELECT _id FROM public.${k} WHERE name='${v}'), `;
 };
 
 const keebuildsController = {};
 
 keebuildsController.getBuildsForSession = (req, res, next) => {
   //size, pcb, switch, plate, keycap need to be queried by Joining
-  const queryString = `SELECT build.name, build.color, s.name as size, pcb.name as pcb, switch.name as switch, plate.name as plate, k.name as keycap FROM build INNER JOIN size s ON build.size=s._id INNER JOIN pcb ON build.pcb=pcb._id INNER JOIN switch ON build.switch=switch._id INNER JOIN plate ON build.plate=plate._id INNER JOIN keycap k ON build.keycap=k._id WHERE session=${req.query.id};`;
+  const queryString = `SELECT build.name, build.color, s.name as size, pcb.name as pcb, switch.name as switch, plate.name as plate, k.name as keycap FROM public.build b INNER JOIN public.size s ON b.size=s._id INNER JOIN public.pcb pcb ON b.pcb=pcb._id INNER JOIN public.switch switch ON b.switch=switch._id INNER JOIN public.plate plate ON b.plate=plate._id INNER JOIN public.keycap k ON b.keycap=k._id WHERE session=${req.query.id};`;
   console.log({queryString});
 
   db.query(queryString)
