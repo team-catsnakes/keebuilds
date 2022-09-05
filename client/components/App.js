@@ -3,7 +3,7 @@ import React from 'react';
 import StartBuild from './StartBuild';
 import SavedBuilds from './SavedBuilds';
 import '../scss/styles.scss';
-import logo from '/Users/andrewmoy/keebuilds/client/assets/bongocat.png';
+import logo from '../assets/bongocat.png';
 
 const App = () => (
   <div>
