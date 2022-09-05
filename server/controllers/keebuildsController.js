@@ -6,7 +6,6 @@ const errorCreator = (methodName, description) => ({
 });
 
 const generateInnerSelect = (k, v) => {
-  console.(k, v);
   if (k === 'switchType') return `(SELECT _id FROM switch WHERE name='${v}')`;
   return `(SELECT _id FROM ${k} WHERE name='${v}'), `;
 };
