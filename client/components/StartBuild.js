@@ -79,7 +79,7 @@ const StartBuild = () => {
     // check to have post request run only for completed select
     if (build[5] !== '') {
       axios
-        .post('/api', {
+        .post('/api/build', {
           size: build[0],
           pcb: build[1],
           plate: build[2],
@@ -131,7 +131,7 @@ const StartBuild = () => {
     setValue(event.target.value);
   };
 
-  console.log('selected radio value:', value);
+  console.log('event target value:', value);
 
   const getContent = (activeStep) => {
     // renders radio buttons for each step
