@@ -14,7 +14,7 @@ const keebuildsController = {};
 
 keebuildsController.getBuildsForSession = (req, res, next) => {
   //size, pcb, switch, plate, keycap need to be queried by Joining
-  const queryString = `SELECT b.name, b.color, s.name as size, pcb.name as pcb, switch.name as switch, plate.name as plate, k.name as keycap FROM public.build b INNER JOIN public.size s ON b.size=s._id INNER JOIN public.pcb pcb ON b.pcb=pcb._id INNER JOIN public.switch switch ON b.switch=switch._id INNER JOIN public.plate plate ON b.plate=plate._id INNER JOIN public.keycap k ON b.keycap=k._id WHERE session=${req.params.id};`;
+  const queryString = `SELECT b._id, b.name, b.color, s.name as size, pcb.name as pcb, switch.name as switch, plate.name as plate, k.name as keycap FROM public.build b INNER JOIN public.size s ON b.size=s._id INNER JOIN public.pcb pcb ON b.pcb=pcb._id INNER JOIN public.switch switch ON b.switch=switch._id INNER JOIN public.plate plate ON b.plate=plate._id INNER JOIN public.keycap k ON b.keycap=k._id WHERE session=${req.params.id};`;
   console.log({queryString});
 
   db.query(queryString)
@@ -43,5 +43,17 @@ keebuildsController.createBuild = (req, res, next) => {
     .then(() => next())
     .catch(() => errorCreator('createBuild', 'Failed to insert Build'));
 };
+
+keebuildsController.deleteBuild = (req, res, next) => {
+  const query = `DELETE FROM public.build b WHERE b._id=${req.params.id}`;
+  console.log({query});
+  db.query(query)
+    .then(() => next())
+    .catch(() => errorCreator('deleteBuild', 'Failed to DELETE Build'));
+};
+
+
+
+
 
 module.exports = keebuildsController;
