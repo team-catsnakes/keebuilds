@@ -28,7 +28,7 @@ const options = [
   ['GMK', 'KAT', 'PBT']
 ];
 
-const StartBuild = () => {
+const StartBuild = ({setBuildsParent}) => {
   // saving state of selected build
   const [build, setBuild] = React.useState({
     0: '',
@@ -88,7 +88,8 @@ const StartBuild = () => {
           name: build[5],
           color: 'blue',
           session: 0
-        });
+        }).then(setBuildsParent);
+
       console.log('POST REQUEST: ', {
         size: build[0],
         pcb: build[1],

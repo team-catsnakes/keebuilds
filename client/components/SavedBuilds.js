@@ -1,16 +1,25 @@
 import React from 'react';
-import Button from '@mui/material/Button';
 import '../scss/styles.scss';
 
-const SavedBuilds = () => {
+const SavedBuilds = ({builds}) => {
+  console.log({builds});
+  console.log('typeof builds is', typeof builds);
 
   const handleGet = () => {
     // redirect to saved builds page
   };
-
+  const cards = [];
+  for(const build of builds){
+    cards.push(
+      <div>
+      Name: {build.name},
+      PCB: {build.pcb}
+      </div>
+    );
+  }
   return (
     <div className="savedBuilds">
-      <Button sx={{ width: '200px', color: 'rgb(65, 91, 152)' }} variant="outlined" onClick={handleGet}>Saved Keebs</Button>
+      {cards}
     </div>
   );
 };
