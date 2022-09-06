@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import bongocat from '../assets/bongocat.png';
 import StartBuild from './StartBuild';
 import SavedBuilds from './SavedBuilds';
-import '../scss/styles.scss';
-import logo from '../assets/bongocat.png';
 
-const App = () => (
-  <div>
-    
-    <h1 className='logo'>KEEBUILDS</h1>
-    {/* <img src={logo} alt="Bongo Cat" /> */}
-    <div className='startBuildButtonDiv'><StartBuild/></div>
-    <div className='savedBuildsButtonDiv'><SavedBuilds/></div>
-    
-  </div>
-);
+import SavedBuildsButton from './SavedBuildsButton';
+import '../scss/styles.scss';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './HomePage';
+import SavedKeebsPage from './SavedKeebsPage';
+
+
+const App = () => {
+
+  return (
+    <div>
+      <Routes>
+        <Route path='/' element={<HomePage/>}></Route>
+        <Route path='/savedKeebs' element={<SavedKeebsPage/>}></Route>
+      </Routes>
+    </div>
+  );
+};
 
 export default App;

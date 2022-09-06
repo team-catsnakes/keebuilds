@@ -29,6 +29,9 @@ const options = [
 ];
 
 const StartBuild = () => {
+
+  console.log('StartBuild is rendering');
+
   // saving state of selected build
   const [build, setBuild] = React.useState({
     0: '',
@@ -67,7 +70,7 @@ const StartBuild = () => {
     // save current selected value to build state when clicking next
     setBuild({
       ...build,
-      [activeStep]: value
+      [activeStep]: value.replace('\'', '\'\'')
     });
 
     setValue('');
@@ -89,6 +92,7 @@ const StartBuild = () => {
           color: 'blue',
           session: 0
         });
+
       console.log('POST REQUEST: ', {
         size: build[0],
         pcb: build[1],

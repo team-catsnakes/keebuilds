@@ -8,7 +8,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './build'),
     filename: 'bundle.js',
-    publicPath: '/build'
+    publicPath: '/'
   },
   devServer: {
     static: {
@@ -22,6 +22,7 @@ module.exports = {
     host: 'localhost',
     port: 8080,
     hot: true,
+    historyApiFallback:true,
   },
   plugins: [new HtmlWebpackPlugin({ template: './client/index.html' })],
   module: {
