@@ -21,7 +21,7 @@ const SavedKeebsPage = () => {
   const setter = () => {
     fetchBuilds()
       .then(response => {
-        if(response.some(build => !builds.map(b => b.name).includes(build.name))){
+        if(JSON.stringify(response) !== JSON.stringify(builds)){
           setBuilds(response);
         }
       });

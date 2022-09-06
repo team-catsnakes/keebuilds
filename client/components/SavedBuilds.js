@@ -8,6 +8,7 @@ const SavedBuilds = ({builds ,setter}) => {
   console.log('typeof builds is', typeof builds);
 
   const removeBox = (id) => {
+    console.log('removing build');
     axios.delete(`/api/build/${id}`)
       .then(() =>{
         setter();
