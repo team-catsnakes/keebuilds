@@ -28,7 +28,10 @@ const options = [
   ['GMK', 'KAT', 'PBT']
 ];
 
-const StartBuild = ({setBuildsParent}) => {
+const StartBuild = () => {
+
+  console.log('StartBuild is rendering');
+
   // saving state of selected build
   const [build, setBuild] = React.useState({
     0: '',
@@ -67,7 +70,7 @@ const StartBuild = ({setBuildsParent}) => {
     // save current selected value to build state when clicking next
     setBuild({
       ...build,
-      [activeStep]: value
+      [activeStep]: value.replace('\'', '\'\'')
     });
 
     setValue('');
@@ -88,7 +91,7 @@ const StartBuild = ({setBuildsParent}) => {
           name: build[5],
           color: 'blue',
           session: 0
-        }).then(setBuildsParent);
+        });
 
       console.log('POST REQUEST: ', {
         size: build[0],

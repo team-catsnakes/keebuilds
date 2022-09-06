@@ -17,6 +17,7 @@ const SavedBuilds = ({builds}) => {
       </div>
     );
   }
+  console.log('SavedBuilds is rendering');
   return (
     <div className="savedBuilds">
       {cards}
