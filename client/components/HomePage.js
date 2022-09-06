@@ -5,6 +5,7 @@ import StartBuild from './StartBuild';
 import SavedBuilds from './SavedBuilds';
 import SavedBuildsButton from './SavedBuildsButton';
 import logo from '../assets/bongocat.png';
+import bongocat from '../assets/bongocatkeyboard.png';
 
 
 
@@ -12,13 +13,12 @@ import logo from '../assets/bongocat.png';
 
 const HomePage = () => {
 
-
-
   return (
     <>
       <h1 className='logo'>KEEBUILDS</h1>
-      {/* <img src={logo} alt="Bongo Cat" /> */}
+      
       <div className='startBuildButtonDiv'>
+        <img src={bongocat} alt="Bongo Cat" />
         <StartBuild />
       </div>
       <div className='savedBuildsButtonDiv'><SavedBuildsButton /></div>

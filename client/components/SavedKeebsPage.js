@@ -2,6 +2,8 @@ import React from 'react';
 import '../scss/styles.scss';
 import axios from 'axios';
 import SavedBuilds from './SavedBuilds';
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 
 const fetchBuilds = async () => {
@@ -19,7 +21,7 @@ const SavedKeebsPage = () => {
   const setter = () => {
     fetchBuilds()
       .then(response => {
-        if(response.some(build => !builds.map(b => b.name).includes(build.name))){
+        if(JSON.stringify(response) !== JSON.stringify(builds)){
           setBuilds(response);
         }
       });
@@ -28,8 +30,11 @@ const SavedKeebsPage = () => {
 
   return (
     <>
-      <h1>You are on the saved Keebs page. Make yourself at home.</h1>
-      <div className='savedBuildsContainer'><SavedBuilds builds={builds}></SavedBuilds></div>
+      <Link to="/">
+        <Button sx={{ width: '200px', color: 'rgb(65, 91, 152)' }} variant="outlined">Back</Button>
+      </Link>
+      <h1>Saved Builds</h1>
+      <div className='savedBuildsContainer'><SavedBuilds builds={builds} setter = {setter}></SavedBuilds></div>
 
     </>
   );
