@@ -32,6 +32,15 @@ buildRouter.get(
     return res.status(200).json(res.locals.builds);
   }
 );
+
+buildRouter.delete(
+  '/build/:id',
+  keebuildsController.deleteBuild,
+  (req, res) => {
+    return res.status(204).send();
+  }
+);
+
 // catch all handler for all unknown routes
 app.use((req, res) => {
   res.status(404).send('404');
