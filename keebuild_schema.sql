@@ -19,6 +19,7 @@ CREATE TABLE public.build (
     "switch" bigint   NOT NULL,
     "keycap" bigint   NOT NULL,
     "color" varchar   NOT NULL,
+    "account" varchar NOT NULL,
     CONSTRAINT "pk_build" PRIMARY KEY (
         "_id"
      )
@@ -26,14 +27,16 @@ CREATE TABLE public.build (
   OIDS=FALSE
 );
 
--- CREATE TABLE public.session (
---     "_id" serial   NOT NULL,
---     CONSTRAINT "pk_session" PRIMARY KEY (
---         "_id"
---      )
--- ) WITH (
---   OIDS=FALSE
--- );
+CREATE TABLE public.account (
+    "_id" serial   NOT NULL,
+    "username" varchar NOT NULL,
+    "password" varchar NOT NULL,
+    CONSTRAINT "pk_account" PRIMARY KEY (
+        "username"
+     )
+) WITH (
+  OIDS=FALSE
+);
 
 CREATE TABLE public.pcb (
     "_id" serial   NOT NULL,
@@ -93,7 +96,7 @@ CREATE TABLE public.plate (
 ALTER TABLE public.build ADD CONSTRAINT "fk_build_size" FOREIGN KEY("size")
 REFERENCES public.size ("_id");
 
--- ALTER TABLE public.build ADD CONSTRAINT "fk_build_session" FOREIGN KEY("session")
+-- ALTER TABLE public.build ADD CONSTRAINT "fk_build_accounts" FOREIGN KEY("session")
 -- REFERENCES public.session ("_id");
 
 ALTER TABLE public.build ADD CONSTRAINT "fk_build_pcb" FOREIGN KEY("pcb")
@@ -108,6 +111,8 @@ REFERENCES public.switch ("_id");
 ALTER TABLE public.build ADD CONSTRAINT "fk_build_keycap" FOREIGN KEY("keycap")
 REFERENCES public.keycap ("_id");
 
+ALTER TABLE public.build ADD CONSTRAINT "fk_build_account" FOREIGN KEY("account")
+REFERENCES public.account ("username");
 
 -- Creating Default Session
 -- INSERT INTO public.session VALUES (1);
@@ -139,4 +144,8 @@ INSERT INTO public.keycap (_id, name) VALUES (1, 'GMK');
 INSERT INTO public.keycap (_id, name) VALUES (2, 'KAT');
 INSERT INTO public.keycap (_id, name) VALUES (3, 'PBT');
 
-INSERT INTO public.build (session, name, size, pcb, plate, switch, keycap, color) VALUES (1, 'Big Build', (SELECT _id FROM public.size WHERE name='60%'), (SELECT _id FROM public.pcb WHERE name='Hotswap'), (SELECT _id FROM public.plate WHERE name='Aluminum'), (SELECT _id FROM public.switch WHERE name='Linear'), (SELECT _id FROM public.keycap WHERE name='GMK'), 'green');
+--Populating Account Table
+
+INSERT INTO public.account (_id, username, password) VALUES (1, 'catsnakes', 'catsnakes123');
+
+INSERT INTO public.build (session, name, size, pcb, plate, switch, keycap, color, account) VALUES (1, 'Big Build', (SELECT _id FROM public.size WHERE name='60%'), (SELECT _id FROM public.pcb WHERE name='Hotswap'), (SELECT _id FROM public.plate WHERE name='Aluminum'), (SELECT _id FROM public.switch WHERE name='Linear'), (SELECT _id FROM public.keycap WHERE name='GMK'), 'green', (SELECT username FROM public.account WHERE username='catsnakes'));

@@ -72,7 +72,6 @@ const StartBuild = () => {
       ...build,
       [activeStep]: value.replace('\'', '\'\'')
     });
-
     setValue('');
     setActiveStep(activeStep + 1);
   };
