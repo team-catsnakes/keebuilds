@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 
 const fetchBuilds = async () => {
   const allBuilds = await axios.get('/api/session/0');
-  console.log('data from saved builds get request: ', allBuilds.data);
   return allBuilds.data;
 };
 

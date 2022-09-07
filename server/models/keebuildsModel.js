@@ -1,10 +1,10 @@
 const { Pool } = require('pg');
-const { PG_URI } = require('../../secrets.js');
-
+const PG_URI =
+  'postgres://firdltge:JRwH4uYBufJZ5r1JaVGladVp8Mio1uyP@jelani.db.elephantsql.com/firdltge';
 
 // create a new pool here using the connection string above
 const pool = new Pool({
-  connectionString: PG_URI
+  connectionString: PG_URI,
 });
 
 // We export an object that contains a property called query,
@@ -13,5 +13,5 @@ const pool = new Pool({
 module.exports = {
   query: (text, params, callback) => {
     return pool.query(text, params, callback);
-  }
+  },
 };
