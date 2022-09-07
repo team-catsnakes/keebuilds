@@ -16,16 +16,30 @@ if (process.env.NODE_ENV !== 'development') {
       .sendFile(path.resolve(__dirname, '../build/index.html'));
   });
 }
-const buildRouter = express.Router();
-app.use('/api', buildRouter);
+
+const router = express.Router();
+app.use('/api', router);
 
 // Post a build to the database
-buildRouter.post('/build', keebuildsController.createBuild, (req, res) => {
+router.post('/build', keebuildsController.createBuild, (req, res) => {
   return res.status(201).json(res.locals.dbResponse);
 });
 
+router.post('/signup', keebuildsController.createUser, (req, res) => {
+  return res.status(200).send(res.locals.newUser);
+});
+
+app.post('/login', keebuildsController.verifyUser, (req, res) => {
+  return res.status(200).redirect('/');
+});
+
+router.get('/users', (req, res) => {
+  return res.sendStatus(200);
+});
+
+
 //Get build from database
-buildRouter.get(
+router.get(
   '/session/:id',
   keebuildsController.getBuildsForSession,
   (req, res) => {
@@ -33,7 +47,7 @@ buildRouter.get(
   }
 );
 
-buildRouter.delete(
+router.delete(
   '/build/:id',
   keebuildsController.deleteBuild,
   (req, res) => {

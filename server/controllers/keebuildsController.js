@@ -1,4 +1,5 @@
 const db = require('../models/keebuildsModel');
+const bcrypt = require('bcrypt');
 
 const errorCreator = (methodName, description) => ({
   log: `Error occurred in keebuildsController.${methodName}.\nDescription: ${description}`,
@@ -12,6 +13,52 @@ const generateInnerSelect = (k, v) => {
 };
 
 const keebuildsController = {};
+
+// userSchema.pre('save', async function(next){
+//   const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+//   this.password = await bcrypt.hash(this.password, salt);
+//   next();
+// })
+
+keebuildsController.createUser = (req, res, next) => {
+  const { username, password } = req.body;
+  const hashedPassword = bcrypt.hash(password, 10);
+  //create query string for SQL database
+  const queryString = `INSERT INTO public.account (username, password) VALUES (${username}, ${hashedPassword})`;
+  //db.query to create the new account
+  db.query(queryString)
+    .then((response) => (res.locals.newUser = response.rows))
+    .then(() => next())
+    .catch(() => next(errorCreator('createUser', 'FAILED to create USER')));
+};
+
+keebuildsController.verifyUser = (req, res, next) => {
+  const { username, password } = req.body;
+  const hashedPassword = bcrypt.hash(password, 10);
+  const queryString = `SELECT public.account FROM user WHERE username = ${username} AND password = ${hashedPassword}`; // find the user account
+
+  db.query(queryString)
+    // .then(() => res.locals.verifiedUser = true)
+    .then(() => next())
+    .catch(() => next(errorCreator('createUser', 'FAILED to verify USER')));
+};
+
+////////login controller not complete -- pls feel free to complete the login
+//1. create the SQL query
+//2. pass that query to db.query
+
+// keebuildsController.verifyUser = (req, res, next) => {
+//   const { username, password } = req.body;
+//   const queryUsername = ''
+//   const queryPassword = ''
+
+//   if(db.queryUsername === username) {
+//   bcrypt.compare(password, db.queryUsername, function(err, result) {
+// if (result === true) {
+// next() or render open sesame
+// }
+// })
+// }
 
 keebuildsController.getBuildsForSession = (req, res, next) => {
   console.log('REQ', req.params.id);
