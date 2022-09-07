@@ -26,7 +26,7 @@ router.post('/build', keebuildsController.createBuild, (req, res) => {
 });
 
 router.post('/signup', keebuildsController.createUser, (req, res) => {
-  return res.status(200).send(res.locals.newUser);
+  return res.status(200).send('Signup Succesful! Try logging in.');
 });
 
 app.post('/login', keebuildsController.verifyUser, (req, res) => {
@@ -37,7 +37,6 @@ router.get('/users', (req, res) => {
   return res.sendStatus(200);
 });
 
-
 //Get build from database
 router.get(
   '/session/:id',
@@ -47,13 +46,9 @@ router.get(
   }
 );
 
-router.delete(
-  '/build/:id',
-  keebuildsController.deleteBuild,
-  (req, res) => {
-    return res.status(204).send();
-  }
-);
+router.delete('/build/:id', keebuildsController.deleteBuild, (req, res) => {
+  return res.status(204).send();
+});
 
 // catch all handler for all unknown routes
 app.use((req, res) => {

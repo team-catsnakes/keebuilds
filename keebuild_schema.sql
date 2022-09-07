@@ -30,7 +30,7 @@ CREATE TABLE public.build (
 CREATE TABLE public.account (
     "_id" serial   NOT NULL,
     "username" varchar NOT NULL,
-    "password" varchar NOT NULL,
+    "password" CHAR(60) NOT NULL,
     CONSTRAINT "pk_account" PRIMARY KEY (
         "username"
      )

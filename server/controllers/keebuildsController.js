@@ -19,17 +19,32 @@ const keebuildsController = {};
 //   this.password = await bcrypt.hash(this.password, salt);
 //   next();
 // })
+// const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+//   this.password = await bcrypt.hash(this.password, salt);
 
-keebuildsController.createUser = (req, res, next) => {
+keebuildsController.createUser = async (req, res, next) => {
   const { username, password } = req.body;
-  const hashedPassword = bcrypt.hash(password, 10);
+  // create an env file
+  // SALT = 10
+  // const salt = await bcrypt.genSalt(Number(process.env.SALT))
+  const salt = 10; //create process.env.SALT file with salt value to increase security
+  const hashedPassword = await bcrypt.hash(password, salt);
+  // const hashedPassword = await bcrypt.genSalt(saltRounds, function(err, salt) {  
+  //   bcrypt.hash(password, salt, function(err, hash) {
+  //     // Store hash in database here
+  //     if (err) throw (err); 
+  //     return hash;
+  //   });
+  // });
+  const queryString = `INSERT INTO public.account(username, password) VALUES ('${username}', '${hashedPassword}')`;
   //create query string for SQL database
-  const queryString = `INSERT INTO public.account (username, password) VALUES (${username}, ${hashedPassword})`;
+  //const queryString = `INSERT INTO public.account (username, password) VALUES (${username}, ${hashedPassword})`;
   //db.query to create the new account
-  db.query(queryString)
-    .then((response) => (res.locals.newUser = response.rows))
-    .then(() => next())
-    .catch(() => next(errorCreator('createUser', 'FAILED to create USER')));
+  const response = await db.query(queryString); 
+  if(!response){ 
+    return next(errorCreator('createUser', 'response failed'));
+  }
+  return next();
 };
 
 keebuildsController.verifyUser = (req, res, next) => {
