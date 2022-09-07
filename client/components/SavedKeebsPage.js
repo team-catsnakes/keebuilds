@@ -5,9 +5,9 @@ import SavedBuilds from './SavedBuilds';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
-
+//Modify to only fetch builds with relevant account _id
 const fetchBuilds = async () => {
-  const allBuilds = await axios.get('/api/session/0');
+  const allBuilds = await axios.get('/api/session/catsnakes');//`${username}`
   return allBuilds.data;
 };
 
