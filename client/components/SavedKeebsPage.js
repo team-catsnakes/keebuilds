@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 
 const SavedKeebsPage = ({ username }) => {
   const [builds, setBuilds] = React.useState([]);
-  console.log('SAVED KEEBS', username);
 
   const fetchBuilds = async () => {
     const allBuilds = await axios.get(`/api/builds/${username}`);

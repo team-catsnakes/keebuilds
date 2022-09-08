@@ -33,26 +33,29 @@ keebuildsController.createUser = async (req, res, next) => {
   //create query string for SQL database
   //const queryString = `INSERT INTO public.account (username, password) VALUES (${username}, ${hashedPassword})`;
   //db.query to create the new account
-  const response = await db.query(queryString); 
+  const response = await db.query(queryString);
   console.log(response);
-  if(!response){ 
+  if (!response) {
     return next(errorCreator('createUser', 'response failed'));
   }
   return next();
 };
 
-
 keebuildsController.verifyUser = async (req, res, next) => {
   console.log(req.body);
   const { username, password } = req.body;
-  const queryString = `SELECT _id, username, password FROM public.account WHERE username = '${username}'`;   
+  const queryString = `SELECT _id, username, password FROM public.account WHERE username = '${username}'`;
   // { _id, username, password }
   const response = await db.query(queryString);
   // const hashedPassword = await bcrypt.hash(password, 10);
-  const verifiedPassword = await bcrypt.compare(password, response.rows[0].password);
-  if (!verifiedPassword) return next(errorCreator('verifyUser', 'verifiedPassword failed'));
+  const verifiedPassword = await bcrypt.compare(
+    password,
+    response.rows[0].password
+  );
+  if (!verifiedPassword)
+    return next(errorCreator('verifyUser', 'verifiedPassword failed'));
   //compare hashed password with returned password
-  res.locals.verifiedUser = response.rows[0].username; 
+  res.locals.verifiedUser = response.rows[0].username;
   return next();
 };
 
@@ -66,7 +69,7 @@ keebuildsController.getBuildsForSession = (req, res, next) => {
   INNER JOIN public.plate plate ON b.plate=plate._id 
   INNER JOIN public.keycap k ON b.keycap=k._id 
   INNER JOIN public.account a ON b.account=a.username
-  WHERE username='${req.params.username}';`; 
+  WHERE username='${req.params.username}';`;
 
   db.query(queryString)
     .then((result) => result.rows)
@@ -80,17 +83,22 @@ keebuildsController.getBuildsForSession = (req, res, next) => {
 };
 
 keebuildsController.createBuild = (req, res, next) => {
-  const { session, name, size, pcb, plate, keycap, color, username } = req.body;
-  const account = username;
+  const { session, name, size, pcb, plate, keycap, color, account } = req.body;
+  console.log('CREATE BUILD 1', req.body);
   const switchType = req.body.switch;
   const rowsRequiringSelect = { size, pcb, plate, keycap, switchType };
-  let query = `INSERT INTO build(session, name, color, size, pcb, plate, keycap, switch, account) VALUES (${session}, '${name}', '${color}', '${account}'`;
+  let query = `INSERT INTO build(session, name, color, account, size, pcb, plate, keycap, switch) VALUES (${session}, '${name}', '${color}', '${account}'`;
+  console.log('CREATE BUILD 2', query);
   for (const [k, v] of Object.entries(rowsRequiringSelect)) {
     query = query + generateInnerSelect(k, v);
   }
-  query = query + ')';
+  query = query + ');';
+  console.log('CREATE BUILD 3', query);
   db.query(query)
-    .then((dbResponse) => (res.locals.dbResponse = dbResponse.rowCount))
+    .then((dbResponse) => {
+      console.log('dbResponse', dbResponse);
+      (res.locals.dbResponse = dbResponse.rowCount);
+    })
     .then(() => next())
     .catch(() => errorCreator('createBuild', 'Failed to insert Build'));
 };
