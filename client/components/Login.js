@@ -97,7 +97,7 @@ export default function Login({ setUsername }) {
             margin='dense'
             id='password'
             label='password'
-            type='text'
+            type='password'
             fullWidth
             variant='standard'
             name='password'
