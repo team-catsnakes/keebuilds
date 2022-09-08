@@ -29,8 +29,8 @@ router.post('/signup', keebuildsController.createUser, (req, res) => {
   return res.status(200).send('Signup Succesful! Try logging in.');
 });
 
-app.post('/login', keebuildsController.verifyUser, (req, res) => {
-  return res.status(200).redirect('/');
+router.post('/login', keebuildsController.verifyUser, (req, res) => {
+  return res.status(200).send(res.locals.verifiedUser);
 });
 
 router.get('/users', (req, res) => {

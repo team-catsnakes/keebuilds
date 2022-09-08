@@ -29,51 +29,31 @@ keebuildsController.createUser = async (req, res, next) => {
   // const salt = await bcrypt.genSalt(Number(process.env.SALT))
   const salt = 10; //create process.env.SALT file with salt value to increase security
   const hashedPassword = await bcrypt.hash(password, salt);
-  // const hashedPassword = await bcrypt.genSalt(saltRounds, function(err, salt) {  
-  //   bcrypt.hash(password, salt, function(err, hash) {
-  //     // Store hash in database here
-  //     if (err) throw (err); 
-  //     return hash;
-  //   });
-  // });
   const queryString = `INSERT INTO public.account(username, password) VALUES ('${username}', '${hashedPassword}')`;
   //create query string for SQL database
   //const queryString = `INSERT INTO public.account (username, password) VALUES (${username}, ${hashedPassword})`;
   //db.query to create the new account
   const response = await db.query(queryString); 
+  console.log(response);
   if(!response){ 
     return next(errorCreator('createUser', 'response failed'));
   }
   return next();
 };
 
-keebuildsController.verifyUser = (req, res, next) => {
+
+keebuildsController.verifyUser = async (req, res, next) => {
   const { username, password } = req.body;
-  const hashedPassword = bcrypt.hash(password, 10);
-  const queryString = `SELECT public.account FROM user WHERE username = ${username} AND password = ${hashedPassword}`; // find the user account
-
-  db.query(queryString)
-    // .then(() => res.locals.verifiedUser = true)
-    .then(() => next())
-    .catch(() => next(errorCreator('createUser', 'FAILED to verify USER')));
+  const queryString = `SELECT _id, username, password FROM public.account WHERE username = '${username}'`;   
+  // { _id, username, password }
+  const response = await db.query(queryString);
+  // const hashedPassword = await bcrypt.hash(password, 10);
+  const verifiedPassword = await bcrypt.compare(password, response.rows[0].password);
+  if (!verifiedPassword) return next(errorCreator('verifyUser', 'verifiedPassword failed'));
+  //compare hashed password with returned password
+  res.locals.verifiedUser = response.rows[0].username; 
+  return next();
 };
-
-////////login controller not complete -- pls feel free to complete the login
-//1. create the SQL query
-//2. pass that query to db.query
-
-// keebuildsController.verifyUser = (req, res, next) => {
-//   const { username, password } = req.body;
-//   const queryUsername = ''
-//   const queryPassword = ''
-
-//   if(db.queryUsername === username) {
-//   bcrypt.compare(password, db.queryUsername, function(err, result) {
-// if (result === true) {
-// next() or render open sesame
-// }
-// })
-// }
 
 keebuildsController.getBuildsForSession = (req, res, next) => {
   console.log('REQ', req.params.id);

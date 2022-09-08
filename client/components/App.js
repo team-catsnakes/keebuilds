@@ -15,7 +15,7 @@ const App = () => {
   return (
     <div>
       <Routes>
-        <Route path='/' element={<HomePage/>}></Route> localhost:8080/api/users -> localhost:3000/api/users
+        <Route path='/' element={<HomePage/>}></Route> 
         <Route path='/savedKeebs' element={<SavedKeebsPage />}></Route>
       </Routes>
     </div>
