@@ -28,7 +28,7 @@ const options = [
   ['GMK', 'KAT', 'PBT']
 ];
 
-const StartBuild = () => {
+const StartBuild = ({username}) => {
 
   console.log('StartBuild is rendering');
 
@@ -89,7 +89,8 @@ const StartBuild = () => {
           keycap: build[4],
           name: build[5],
           color: 'blue',
-          session: 0
+          session: 0, 
+          account: username
         });
 
       console.log('POST REQUEST: ', {
@@ -100,7 +101,8 @@ const StartBuild = () => {
         keycap: build[4],
         name: build[5],
         color: 'blue',
-        session: 0
+        session: 0, 
+        account: username,
       });
       // get request test
       // const fetchBuilds = async () => {

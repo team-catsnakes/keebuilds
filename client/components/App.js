@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 // import bongocat from '../assets/bongocat.png';
 import StartBuild from './StartBuild';
 import SavedBuilds from './SavedBuilds';
@@ -10,17 +10,13 @@ import HomePage from './HomePage';
 import SavedKeebsPage from './SavedKeebsPage';
 
 
-const App = () => {
-  
-  const [username, setUse]const [account, setAccount] = React.useState({
-    username: '',
-    password: '',
-  });
+const App = () => {  
+  const [username, setUsername] = useState(''); // current session's username
   
   return (
     <div>
       <Routes>
-        <Route path='/' element={<HomePage/>}></Route>
+        <Route path='/' element={<HomePage username={username} setUsername={ setUsername } />}></Route>
         <Route path='/savedKeebs' element={<SavedKeebsPage username={ username } />}></Route>
       </Routes>
     </div>

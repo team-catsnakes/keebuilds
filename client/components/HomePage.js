@@ -6,20 +6,20 @@ import SavedBuilds from './SavedBuilds';
 import SavedBuildsButton from './SavedBuildsButton';
 import logo from '../assets/bongocat.png';
 import bongocat from '../assets/bongocatkeyboard.png';
-import FormDialog from './Login';
+import Login from './Login';
 
-const HomePage = () => {
-
+const HomePage = ({ username, setUsername }) => {
   return (
     <>
-      <FormDialog />
+      <Login setUsername={ setUsername } />
       <h1 className='logo'>KEEBUILDS</h1>
-      
       <div className='startBuildButtonDiv'>
-        <img src={bongocat} alt="Bongo Cat" />
-        <StartBuild />
+        <img src={bongocat} alt='Bongo Cat' />
+        <StartBuild username={username} />
       </div>
-      <div className='savedBuildsButtonDiv'><SavedBuildsButton /></div>
+      <div className='savedBuildsButtonDiv'>
+        <SavedBuildsButton />
+      </div>
     </>
   );
 };

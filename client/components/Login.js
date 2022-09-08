@@ -8,11 +8,10 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 
-export default function FormDialog() {
+export default function Login({ setUsername }) {
   const [open, setOpen] = React.useState(false);
 
-  //[state, action] 
-  const [account, setAccount] = React.useState({
+  const [userInput, setUserInput] = React.useState({
     username: '',
     password: '',
   });
@@ -28,62 +27,86 @@ export default function FormDialog() {
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setAccount({
-      ...account,
+    setUserInput({
+      ...userInput,
       [name]: value,
     });
-    console.log(account);
+    console.log('HANDLE CHANGE', name, value);
   };
 
-  const handleSubmit = async () => {
-    const loginInfo = {
-      method: 'post',
-      url: '/api/login',
-      body: account
+  const handleSubmit = async (e) => {
+    //Prevents default behavior of a SUBMIT action
+    e.preventDefault();
+
+    const requestOptions = {
+      username: userInput.username,
+      password: userInput.password,
     };
-    axios.post(loginInfo)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log('Error in verifying the user'));
+
+    // axios.post(requestOptions)
+    //   .then((data) => console.log(data))
+    //   .catch((err) => console.log(err));
+
+    // axios POST template
+    // axios({
+    //   method: 'post',
+    //   url: '/login',
+    //   data: {
+    //     firstName: 'Finn',
+    //     lastName: 'Williams'
+    //   }
+    // });
+
+    try {
+      const postResponse = await axios.post('/api/login', requestOptions);
+      setUsername(postResponse.request.response);
+      handleClose();
+    } catch (err) {
+      console.log(err);
+    }
+
+    // fetch('/api/login', {
+    //   method: 'POST',
+    //   headers: { 'content-type': 'application/json' },
+    //   body: { ...userInput },
+    // });
   };
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant='outlined' onClick={handleClickOpen}>
         Login
       </Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Please Log-in below
-          </DialogContentText>
+          <DialogContentText>Please Log-in below</DialogContentText>
           <TextField
             autoFocus
-            margin="dense"
-            id="username"
-            label="username"
-            type="text"
+            margin='dense'
+            id='username'
+            label='username'
+            type='text'
             fullWidth
-            variant="standard"
+            variant='standard'
             name='username'
             onChange={handleChange}
           />
           <TextField
             autoFocus
-            margin="dense"
-            id="password"
-            label="password"
-            type="text"
+            margin='dense'
+            id='password'
+            label='password'
+            type='text'
             fullWidth
-            variant="standard"
+            variant='standard'
             name='password'
             onChange={handleChange}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Submit</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>

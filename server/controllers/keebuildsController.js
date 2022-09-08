@@ -43,6 +43,7 @@ keebuildsController.createUser = async (req, res, next) => {
 
 
 keebuildsController.verifyUser = async (req, res, next) => {
+  console.log(req.body);
   const { username, password } = req.body;
   const queryString = `SELECT _id, username, password FROM public.account WHERE username = '${username}'`;   
   // { _id, username, password }
@@ -80,10 +81,11 @@ keebuildsController.getBuildsForSession = (req, res, next) => {
 };
 
 keebuildsController.createBuild = (req, res, next) => {
-  const { session, name, size, pcb, plate, keycap, color } = req.body;
+  const { session, name, size, pcb, plate, keycap, color, username } = req.body;
+  const account = username;
   const switchType = req.body.switch;
   const rowsRequiringSelect = { size, pcb, plate, keycap, switchType };
-  let query = `INSERT INTO build (session, name, color, size, pcb, plate, keycap, switch) VALUES (${session}, '${name}', '${color}', `;
+  let query = `INSERT INTO build (session, name, color, size, pcb, plate, keycap, switch, account) VALUES (${session}, '${name}', '${color}', '${account}'`;
   for (const [k, v] of Object.entries(rowsRequiringSelect)) {
     query = query + generateInnerSelect(k, v);
   }
