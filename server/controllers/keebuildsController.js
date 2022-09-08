@@ -41,11 +41,12 @@ keebuildsController.createBuild = (req, res, next) => {
   const { session, name, size, pcb, plate, keycap, color } = req.body;
   const switchType = req.body.switch;
   const rowsRequiringSelect = { size, pcb, plate, keycap, switchType };
-  let query = `INSERT INTO build (session, name, color, size, pcb, plate, keycap, switch) VALUES (${session}, '${name}', '${color}', `;
+  let query = `INSERT INTO build (session, name, color, size, pcb, plate, keycap, switch) VALUES (${session}, '${name}', '${color}', 'catsnakes',`;
   for (const [k, v] of Object.entries(rowsRequiringSelect)) {
     query = query + generateInnerSelect(k, v);
   }
   query = query + ')';
+  console.log('query in create build',query);
   db.query(query)
     .then((dbResponse) => (res.locals.dbResponse = dbResponse.rowCount))
     .then(() => next())
