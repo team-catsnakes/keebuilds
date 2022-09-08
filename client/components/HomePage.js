@@ -6,15 +6,13 @@ import SavedBuilds from './SavedBuilds';
 import SavedBuildsButton from './SavedBuildsButton';
 import logo from '../assets/bongocat.png';
 import bongocat from '../assets/bongocatkeyboard.png';
-
-
-
-
+import FormDialog from './Login';
 
 const HomePage = () => {
 
   return (
     <>
+      <FormDialog />
       <h1 className='logo'>KEEBUILDS</h1>
       
       <div className='startBuildButtonDiv'>
