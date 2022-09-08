@@ -8,16 +8,15 @@ import logo from '../assets/bongocat.png';
 import bongocat from '../assets/bongocatkeyboard.png';
 import FormDialog from './Login';
 
-const HomePage = () => {
-
+const HomePage = (props) => {
+  const {currentUser, setUser} = props;
   return (
     <>
-      <FormDialog />
+      <FormDialog currentUser={currentUser} setUser={setUser}/>
       <h1 className='logo'>KEEBUILDS</h1>
-      
       <div className='startBuildButtonDiv'>
         <img src={bongocat} alt="Bongo Cat" />
-        <StartBuild />
+        <StartBuild currentUser={currentUser} setUser={setUser}/>
       </div>
       <div className='savedBuildsButtonDiv'><SavedBuildsButton /></div>
     </>

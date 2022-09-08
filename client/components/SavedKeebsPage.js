@@ -6,19 +6,19 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
 //Modify to only fetch builds with relevant account _id
-const fetchBuilds = async () => {
-  const allBuilds = await axios.get('/api/session/catsnakes');//`${username}`
+const fetchBuilds = async (currentUser) => {
+  const allBuilds = await axios.get(`/api/session/'${currentUser}'`);//`${username}`
   return allBuilds.data;
 };
 
 
 
 
-const SavedKeebsPage = () => {
+const SavedKeebsPage = (props) => {
   const [builds, setBuilds] = React.useState([]);
-
+  const {currentUser, setUser} = props;
   const setter = () => {
-    fetchBuilds()
+    fetchBuilds(currentUser)
       .then(response => {
         if(JSON.stringify(response) !== JSON.stringify(builds)){
           setBuilds(response);

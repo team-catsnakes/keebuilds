@@ -8,7 +8,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 
-export default function FormDialog() {
+export default function FormDialog(props) {
+  const {curentUser, setUser} = props;
   const [open, setOpen] = React.useState(false);
 
   //[state, action] 
@@ -34,17 +35,26 @@ export default function FormDialog() {
     });
     console.log(account);
   };
-
-  const handleSubmit = async () => {
+  const fetchUser = async () => {
     const loginInfo = {
       method: 'post',
       url: '/api/login',
-      body: account
+      data: account
     };
-    axios.post(loginInfo)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log('Error in verifying the user'));
+    const user = await axios.post(loginInfo);
+    return user.data;
+  };
+  const handleSubmit = async () => {
+    const setter = () => {
+      fetchUser()
+        .then(response => {
+          if(JSON.stringify(response) === JSON.stringify(account.username)){
+            setUser(response);
+          }
+        });
+    };
+    setter();
+    setOpen(false);
   };
 
   return (
@@ -83,7 +93,7 @@ export default function FormDialog() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Submit</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
         </DialogActions>
       </Dialog>
     </div>

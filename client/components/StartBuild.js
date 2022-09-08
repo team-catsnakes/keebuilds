@@ -28,8 +28,8 @@ const options = [
   ['GMK', 'KAT', 'PBT']
 ];
 
-const StartBuild = () => {
-
+const StartBuild = (props) => {
+  
   console.log('StartBuild is rendering');
 
   // saving state of selected build
