@@ -12,11 +12,20 @@ import Signup from './Signup';
 const HomePage = ({ username, setUsername }) => {
   return (
     <>
-      <Login setUsername={ setUsername } />
-      <Signup setUsername={ setUsername } />
+      <Login setUsername={setUsername} />
+      <Signup setUsername={setUsername} />
       <h1 className='logo'>KEEBUILDS</h1>
+      <div>
+        <img
+          src={
+            'https://s1.pearlcdn.com/SEA/Upload/Community/49acf16fd0320200129001213276.gif'
+          }
+          alt='giffy'
+        />
+      </div>
       <div className='startBuildButtonDiv'>
         <img src={bongocat} alt='Bongo Cat' />
+
         <StartBuild username={username} />
       </div>
       <div className='savedBuildsButtonDiv'>
