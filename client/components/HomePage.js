@@ -11,27 +11,33 @@ import Signup from './Signup';
 
 const HomePage = ({ username, setUsername }) => {
   return (
-    <>
-      <Login setUsername={setUsername} />
-      <Signup setUsername={setUsername} />
-      <h1 className='logo'>KEEBUILDS</h1>
-      <div>
-        <img
-          src={
-            'https://s1.pearlcdn.com/SEA/Upload/Community/49acf16fd0320200129001213276.gif'
-          }
-          alt='giffy'
-        />
-      </div>
-      <div className='startBuildButtonDiv'>
-        <img src={bongocat} alt='Bongo Cat' />
+    <div id='homepage-container'>
+      <div id='header-container'>
+        <div id='left-header'>
+          {/* <img
+            className='bongo'
+            src={
+              'https://s1.pearlcdn.com/SEA/Upload/Community/49acf16fd0320200129001213276.gif'
+            }
+            alt='giffy'
+          /> */}
+          <h1 className='title'>KEEBUILDS</h1>
+        </div>
 
+        <div id='right-header'>
+          <SavedBuildsButton username={username} />
+          <Login setUsername={setUsername} />
+          <Signup setUsername={setUsername} />
+        </div>
+      </div>
+
+      <div id='main-container'>
+        <h1>Your perfect keyboard is just clicks away</h1>
         <StartBuild username={username} />
       </div>
-      <div className='savedBuildsButtonDiv'>
-        <SavedBuildsButton />
-      </div>
-    </>
+
+      <footer id='footer-container'></footer>
+    </div>
   );
 };
 

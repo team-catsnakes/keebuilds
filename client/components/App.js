@@ -13,7 +13,7 @@ const App = () => {
   const [username, setUsername] = useState(''); // current session's username
 
   return (
-    <div>
+    <div id="app-container">
       <Routes>
         <Route
           path='/'
