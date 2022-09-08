@@ -8,7 +8,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 
-export default function Login({ setUsername }) {
+export default function Signup({ setUsername }) {
   const [open, setOpen] = React.useState(false);
 
   const [userInput, setUserInput] = React.useState({
@@ -43,44 +43,24 @@ export default function Login({ setUsername }) {
       password: userInput.password,
     };
 
-    // axios.post(requestOptions)
-    //   .then((data) => console.log(data))
-    //   .catch((err) => console.log(err));
-
-    // axios POST template
-    // axios({
-    //   method: 'post',
-    //   url: '/login',
-    //   data: {
-    //     firstName: 'Finn',
-    //     lastName: 'Williams'
-    //   }
-    // });
-
     try {
-      const postResponse = await axios.post('/api/login', requestOptions);
-      setUsername(postResponse.request.response);
+      const postResponse = await axios.post('/api/signup', requestOptions);
+      setUsername(postResponse.data);
       handleClose();
     } catch (err) {
-      alert('Username and/or password is wrong. Try logging in again.');
+      alert('Username already exists');
     }
-
-    // fetch('/api/login', {
-    //   method: 'POST',
-    //   headers: { 'content-type': 'application/json' },
-    //   body: { ...userInput },
-    // });
   };
 
   return (
     <div>
       <Button variant='outlined' onClick={handleClickOpen}>
-        Login
+        Sign Up
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Login</DialogTitle>
+        <DialogTitle>SIGNUP</DialogTitle>
         <DialogContent>
-          <DialogContentText>Please Login Below</DialogContentText>
+          <DialogContentText>Signup to make bongocat happy</DialogContentText>
           <TextField
             autoFocus
             margin='dense'

@@ -23,26 +23,26 @@ const keebuildsController = {};
 //   this.password = await bcrypt.hash(this.password, salt);
 
 keebuildsController.createUser = async (req, res, next) => {
-  const { username, password } = req.body;
-  // create an env file
-  // SALT = 10
-  // const salt = await bcrypt.genSalt(Number(process.env.SALT))
-  const salt = 10; //create process.env.SALT file with salt value to increase security
-  const hashedPassword = await bcrypt.hash(password, salt);
-  const queryString = `INSERT INTO public.account(username, password) VALUES ('${username}', '${hashedPassword}')`;
-  //create query string for SQL database
-  //const queryString = `INSERT INTO public.account (username, password) VALUES (${username}, ${hashedPassword})`;
-  //db.query to create the new account
-  const response = await db.query(queryString);
-  console.log(response);
-  if (!response) {
+  try {
+    const { username, password } = req.body;
+    // create an env file
+    // SALT = 10
+    // const salt = await bcrypt.genSalt(Number(process.env.SALT))
+    const salt = 10; //create process.env.SALT file with salt value to increase security
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const queryString = `INSERT INTO public.account(username, password) VALUES ('${username}', '${hashedPassword}')`;
+    //create query string for SQL database
+    //const queryString = `INSERT INTO public.account (username, password) VALUES (${username}, ${hashedPassword})`;
+    //db.query to create the new account
+    const response = await db.query(queryString);
+    res.locals.newUser = username;
+    return next();
+  } catch (err) {
     return next(errorCreator('createUser', 'response failed'));
   }
-  return next();
 };
 
 keebuildsController.verifyUser = async (req, res, next) => {
-  console.log(req.body);
   const { username, password } = req.body;
   const queryString = `SELECT _id, username, password FROM public.account WHERE username = '${username}'`;
   // { _id, username, password }
@@ -87,7 +87,7 @@ keebuildsController.createBuild = (req, res, next) => {
   console.log('CREATE BUILD 1', req.body);
   const switchType = req.body.switch;
   const rowsRequiringSelect = { size, pcb, plate, keycap, switchType };
-  let query = `INSERT INTO build(session, name, color, account, size, pcb, plate, keycap, switch) VALUES (${session}, '${name}', '${color}', '${account}'`;
+  let query = `INSERT INTO build(session, name, color, account, size, pcb, plate, keycap, switch) VALUES (${session}, '${name}', '${color}', '${account}',`;
   console.log('CREATE BUILD 2', query);
   for (const [k, v] of Object.entries(rowsRequiringSelect)) {
     query = query + generateInnerSelect(k, v);
@@ -97,7 +97,7 @@ keebuildsController.createBuild = (req, res, next) => {
   db.query(query)
     .then((dbResponse) => {
       console.log('dbResponse', dbResponse);
-      (res.locals.dbResponse = dbResponse.rowCount);
+      res.locals.dbResponse = dbResponse.rowCount;
     })
     .then(() => next())
     .catch(() => errorCreator('createBuild', 'Failed to insert Build'));

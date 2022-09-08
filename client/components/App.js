@@ -9,15 +9,20 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './HomePage';
 import SavedKeebsPage from './SavedKeebsPage';
 
-
-const App = () => {  
+const App = () => {
   const [username, setUsername] = useState(''); // current session's username
-  
+
   return (
     <div>
       <Routes>
-        <Route path='/' element={<HomePage username={username} setUsername={ setUsername } />}></Route>
-        <Route path='/savedKeebs' element={<SavedKeebsPage username={ username } />}></Route>
+        <Route
+          path='/'
+          element={<HomePage username={username} setUsername={setUsername} />}
+        ></Route>
+        <Route
+          path='/savedKeebs'
+          element={<SavedKeebsPage username={username} />}
+        ></Route>
       </Routes>
     </div>
   );

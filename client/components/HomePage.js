@@ -7,11 +7,13 @@ import SavedBuildsButton from './SavedBuildsButton';
 import logo from '../assets/bongocat.png';
 import bongocat from '../assets/bongocatkeyboard.png';
 import Login from './Login';
+import Signup from './Signup';
 
 const HomePage = ({ username, setUsername }) => {
   return (
     <>
       <Login setUsername={ setUsername } />
+      <Signup setUsername={ setUsername } />
       <h1 className='logo'>KEEBUILDS</h1>
       <div className='startBuildButtonDiv'>
         <img src={bongocat} alt='Bongo Cat' />
