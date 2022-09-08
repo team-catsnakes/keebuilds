@@ -28,7 +28,7 @@ const options = [
   ['GMK', 'KAT', 'PBT']
 ];
 
-const StartBuild = ({username}) => {
+const StartBuild = ({ username }) => {
 
   console.log('StartBuild is rendering');
 

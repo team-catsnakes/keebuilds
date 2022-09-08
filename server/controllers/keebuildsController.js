@@ -58,7 +58,6 @@ keebuildsController.verifyUser = async (req, res, next) => {
 
 keebuildsController.getBuildsForSession = (req, res, next) => {
   //todo: Query builds by username via the query parameters
-  console.log('REQ', req.params.id);
   //size, pcb, switch, plate, keycap need to be queried by Joining
   const queryString = `SELECT b._id, b.name, b.color, s.name as size, pcb.name as pcb, switch.name as switch, plate.name as plate, k.name as keycap, a.username as username
   FROM public.build b INNER JOIN public.size s ON b.size=s._id 
@@ -67,7 +66,7 @@ keebuildsController.getBuildsForSession = (req, res, next) => {
   INNER JOIN public.plate plate ON b.plate=plate._id 
   INNER JOIN public.keycap k ON b.keycap=k._id 
   INNER JOIN public.account a ON b.account=a.username
-  WHERE username='${req.params.id}';`; 
+  WHERE username='${req.params.username}';`; 
 
   db.query(queryString)
     .then((result) => result.rows)
@@ -85,7 +84,7 @@ keebuildsController.createBuild = (req, res, next) => {
   const account = username;
   const switchType = req.body.switch;
   const rowsRequiringSelect = { size, pcb, plate, keycap, switchType };
-  let query = `INSERT INTO build (session, name, color, size, pcb, plate, keycap, switch, account) VALUES (${session}, '${name}', '${color}', '${account}'`;
+  let query = `INSERT INTO build(session, name, color, size, pcb, plate, keycap, switch, account) VALUES (${session}, '${name}', '${color}', '${account}'`;
   for (const [k, v] of Object.entries(rowsRequiringSelect)) {
     query = query + generateInnerSelect(k, v);
   }

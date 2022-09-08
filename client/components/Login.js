@@ -80,7 +80,7 @@ export default function Login({ setUsername }) {
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Login</DialogTitle>
         <DialogContent>
-          <DialogContentText>Please Log-in below</DialogContentText>
+          <DialogContentText>Please Login Below</DialogContentText>
           <TextField
             autoFocus
             margin='dense'

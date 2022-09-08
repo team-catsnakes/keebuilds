@@ -26,7 +26,7 @@ router.post('/build', keebuildsController.createBuild, (req, res) => {
 });
 
 router.post('/signup', keebuildsController.createUser, (req, res) => {
-  return res.status(200).send('Signup Succesful! Try logging in.');
+  return res.status(200).send('Signup Successful! Try logging in.');
 });
 
 router.post('/login', keebuildsController.verifyUser, (req, res) => {
@@ -39,7 +39,7 @@ router.get('/users', (req, res) => {
 
 //Get build from database
 router.get(
-  '/session/:id',
+  '/builds/:username',
   keebuildsController.getBuildsForSession,
   (req, res) => {
     return res.status(200).json(res.locals.builds);

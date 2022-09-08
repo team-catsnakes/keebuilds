@@ -5,36 +5,38 @@ import SavedBuilds from './SavedBuilds';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
-//Modify to only fetch builds with relevant account _id
-const fetchBuilds = async () => {
-  const allBuilds = await axios.get('/api/session/catsnakes');//`${username}`
-  return allBuilds.data;
-};
-
-
-
-
-const SavedKeebsPage = () => {
+const SavedKeebsPage = ({ username }) => {
   const [builds, setBuilds] = React.useState([]);
+  console.log('SAVED KEEBS', username);
+
+  const fetchBuilds = async () => {
+    const allBuilds = await axios.get(`/api/builds/${username}`);
+    return allBuilds.data;
+  };
 
   const setter = () => {
-    fetchBuilds()
-      .then(response => {
-        if(JSON.stringify(response) !== JSON.stringify(builds)){
-          setBuilds(response);
-        }
-      });
+    fetchBuilds().then((response) => {
+      if (JSON.stringify(response) !== JSON.stringify(builds)) {
+        setBuilds(response);
+      }
+    });
   };
   setter();
 
   return (
     <>
-      <Link to="/">
-        <Button sx={{ width: '200px', color: 'rgb(65, 91, 152)' }} variant="outlined">Back</Button>
+      <Link to='/'>
+        <Button
+          sx={{ width: '200px', color: 'rgb(65, 91, 152)' }}
+          variant='outlined'
+        >
+          Back
+        </Button>
       </Link>
       <h1>Saved Builds</h1>
-      <div className='savedBuildsContainer'><SavedBuilds builds={builds} setter = {setter}></SavedBuilds></div>
-
+      <div className='savedBuildsContainer'>
+        <SavedBuilds builds={builds} setter={setter}></SavedBuilds>
+      </div>
     </>
   );
 };
