@@ -8,12 +8,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 
-<<<<<<< HEAD
-export default function Login({ setUsername }) {
-=======
 export default function FormDialog(props) {
   const {curentUser, setUser} = props;
->>>>>>> 0ee11b98ab680274dc810f74fbe1b002152d9ca7
   const [open, setOpen] = React.useState(false);
 
   const [userInput, setUserInput] = React.useState({
@@ -38,45 +34,6 @@ export default function FormDialog(props) {
     });
     console.log('HANDLE CHANGE', name, value);
   };
-<<<<<<< HEAD
-
-  const handleSubmit = async (e) => {
-    //Prevents default behavior of a SUBMIT action
-    e.preventDefault();
-
-    const requestOptions = {
-      username: userInput.username,
-      password: userInput.password,
-    };
-
-    // axios.post(requestOptions)
-    //   .then((data) => console.log(data))
-    //   .catch((err) => console.log(err));
-
-    // axios POST template
-    // axios({
-    //   method: 'post',
-    //   url: '/login',
-    //   data: {
-    //     firstName: 'Finn',
-    //     lastName: 'Williams'
-    //   }
-    // });
-
-    try {
-      const postResponse = await axios.post('/api/login', requestOptions);
-      setUsername(postResponse.request.response);
-      handleClose();
-    } catch (err) {
-      alert('Username and/or password is wrong. Try logging in again.');
-    }
-
-    // fetch('/api/login', {
-    //   method: 'POST',
-    //   headers: { 'content-type': 'application/json' },
-    //   body: { ...userInput },
-    // });
-=======
   const fetchUser = async () => {
     const loginInfo = {
       method: 'post',
@@ -97,7 +54,6 @@ export default function FormDialog(props) {
     };
     setter();
     setOpen(false);
->>>>>>> 0ee11b98ab680274dc810f74fbe1b002152d9ca7
   };
 
   return (

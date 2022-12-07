@@ -28,13 +28,8 @@ const options = [
   ['GMK', 'KAT', 'PBT']
 ];
 
-<<<<<<< HEAD
-const StartBuild = ({ username }) => {
-
-=======
 const StartBuild = (props) => {
   
->>>>>>> 0ee11b98ab680274dc810f74fbe1b002152d9ca7
   console.log('StartBuild is rendering');
 
   // saving state of selected build

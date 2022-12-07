@@ -6,7 +6,6 @@ import SavedBuilds from './SavedBuilds';
 import SavedBuildsButton from './SavedBuildsButton';
 import logo from '../assets/bongocat.png';
 import bongocat from '../assets/bongocatkeyboard.png';
-<<<<<<< HEAD
 import Login from './Login';
 import Signup from './Signup';
 
