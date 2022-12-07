@@ -48,7 +48,8 @@ export default function Signup({ setUsername }) {
       setUsername(postResponse.data);
       handleClose();
     } catch (err) {
-      alert('Username already exists');
+      // alert('Username already exists');
+      console.log(alert);
     }
   };
 
@@ -77,7 +78,7 @@ export default function Signup({ setUsername }) {
             margin='dense'
             id='password'
             label='password'
-            type='text'
+            type='password'
             fullWidth
             variant='standard'
             name='password'

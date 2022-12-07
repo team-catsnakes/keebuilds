@@ -25,7 +25,7 @@ const App = () => {
 >>>>>>> 0ee11b98ab680274dc810f74fbe1b002152d9ca7
 
   return (
-    <div>
+    <div id="app-container">
       <Routes>
 <<<<<<< HEAD
         <Route

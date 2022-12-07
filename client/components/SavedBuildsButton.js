@@ -5,13 +5,6 @@ import '../scss/styles.scss';
 
 const SavedBuildsButton = () => {
 
-  console.log('SavedBuilds button is rendering');
-
-
-  const handleGet = () => {
-    // redirect to saved builds page
-  };
-
   return (
     <div className="savedBuildsButton">
       <Link to="/savedKeebs">

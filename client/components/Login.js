@@ -125,7 +125,7 @@ export default function FormDialog(props) {
             margin='dense'
             id='password'
             label='password'
-            type='text'
+            type='password'
             fullWidth
             variant='standard'
             name='password'

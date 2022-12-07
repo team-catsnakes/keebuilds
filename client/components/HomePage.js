@@ -12,40 +12,33 @@ import Signup from './Signup';
 
 const HomePage = ({ username, setUsername }) => {
   return (
-    <>
-      <Login setUsername={setUsername} />
-      <Signup setUsername={setUsername} />
-      <h1 className='logo'>KEEBUILDS</h1>
-      <div>
-        <img
-          src={
-            'https://s1.pearlcdn.com/SEA/Upload/Community/49acf16fd0320200129001213276.gif'
-          }
-          alt='giffy'
-        />
-      </div>
-      <div className='startBuildButtonDiv'>
-        <img src={bongocat} alt='Bongo Cat' />
+    <div id='homepage-container'>
+      <div id='header-container'>
+        <div id='left-header'>
+          {/* <img
+            className='bongo'
+            src={
+              'https://s1.pearlcdn.com/SEA/Upload/Community/49acf16fd0320200129001213276.gif'
+            }
+            alt='giffy'
+          /> */}
+          <h1 className='title'>KEEBUILDS</h1>
+        </div>
 
+        <div id='right-header'>
+          <SavedBuildsButton username={username} />
+          <Login setUsername={setUsername} />
+          <Signup setUsername={setUsername} />
+        </div>
+      </div>
+
+      <div id='main-container'>
+        <h1>Your perfect keyboard is just clicks away</h1>
         <StartBuild username={username} />
       </div>
-      <div className='savedBuildsButtonDiv'>
-        <SavedBuildsButton />
-=======
-import FormDialog from './Login';
 
-const HomePage = (props) => {
-  const {currentUser, setUser} = props;
-  return (
-    <>
-      <FormDialog currentUser={currentUser} setUser={setUser}/>
-      <h1 className='logo'>KEEBUILDS</h1>
-      <div className='startBuildButtonDiv'>
-        <img src={bongocat} alt="Bongo Cat" />
-        <StartBuild currentUser={currentUser} setUser={setUser}/>
->>>>>>> 0ee11b98ab680274dc810f74fbe1b002152d9ca7
-      </div>
-    </>
+      <footer id='footer-container'></footer>
+    </div>
   );
 };
 
