@@ -102,3 +102,28 @@ dist
 
 # TernJS port file
 .tern-port
+<<<<<<< HEAD
+=======
+
+.cache/
+coverage/
+dist/*
+!dist/index.html
+node_modules/
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+build/bundle.js
+build/index.html
+build/bundle.js.LICENSE.txt
+
+secrets.js
+>>>>>>> b32dd4a144737714ac97149ce5ed43f829e2a389
