@@ -8,7 +8,12 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import axios from 'axios';
 
+<<<<<<< HEAD
 export default function Login({ setUsername }) {
+=======
+export default function FormDialog(props) {
+  const {curentUser, setUser} = props;
+>>>>>>> 0ee11b98ab680274dc810f74fbe1b002152d9ca7
   const [open, setOpen] = React.useState(false);
 
   const [userInput, setUserInput] = React.useState({
@@ -33,6 +38,7 @@ export default function Login({ setUsername }) {
     });
     console.log('HANDLE CHANGE', name, value);
   };
+<<<<<<< HEAD
 
   const handleSubmit = async (e) => {
     //Prevents default behavior of a SUBMIT action
@@ -70,6 +76,28 @@ export default function Login({ setUsername }) {
     //   headers: { 'content-type': 'application/json' },
     //   body: { ...userInput },
     // });
+=======
+  const fetchUser = async () => {
+    const loginInfo = {
+      method: 'post',
+      url: '/api/login',
+      data: account
+    };
+    const user = await axios.post(loginInfo);
+    return user.data;
+  };
+  const handleSubmit = async () => {
+    const setter = () => {
+      fetchUser()
+        .then(response => {
+          if(JSON.stringify(response) === JSON.stringify(account.username)){
+            setUser(response);
+          }
+        });
+    };
+    setter();
+    setOpen(false);
+>>>>>>> 0ee11b98ab680274dc810f74fbe1b002152d9ca7
   };
 
   return (

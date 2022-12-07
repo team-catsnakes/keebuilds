@@ -87,6 +87,7 @@ keebuildsController.createBuild = (req, res, next) => {
   console.log('CREATE BUILD 1', req.body);
   const switchType = req.body.switch;
   const rowsRequiringSelect = { size, pcb, plate, keycap, switchType };
+<<<<<<< HEAD
   let query = `INSERT INTO build(session, name, color, account, size, pcb, plate, keycap, switch) VALUES (${session}, '${name}', '${color}', '${account}',`;
   console.log('CREATE BUILD 2', query);
   for (const [k, v] of Object.entries(rowsRequiringSelect)) {
@@ -94,6 +95,14 @@ keebuildsController.createBuild = (req, res, next) => {
   }
   query = query + ');';
   console.log('CREATE BUILD 3', query);
+=======
+  let query = `INSERT INTO build (session, name, color, size, pcb, plate, keycap, switch) VALUES (${session}, '${name}', '${color}', 'catsnakes',`;
+  for (const [k, v] of Object.entries(rowsRequiringSelect)) {
+    query = query + generateInnerSelect(k, v);
+  }
+  query = query + ')';
+  console.log('query in create build',query);
+>>>>>>> 0ee11b98ab680274dc810f74fbe1b002152d9ca7
   db.query(query)
     .then((dbResponse) => {
       console.log('dbResponse', dbResponse);

@@ -2,10 +2,6 @@ const request = require('supertest');
 const server = 'http://localhost:3000/api';
 const { expect, toBeDefined } = require('chai');
 
-//VIEW - CONTROLLER - MODEL
-//CLIENT - SERVER - DATABASE
-//USER - COMPUTER HANDLING REQ - DATA
-
 //REGISTERING A NEW USER: POST USER- CREATE NEW USER
 //the parent describes a series of tests, starting with status 200 + content type verified
 describe('Route intergration', () => {

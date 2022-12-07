@@ -6,6 +6,7 @@ import SavedBuilds from './SavedBuilds';
 import SavedBuildsButton from './SavedBuildsButton';
 import logo from '../assets/bongocat.png';
 import bongocat from '../assets/bongocatkeyboard.png';
+<<<<<<< HEAD
 import Login from './Login';
 import Signup from './Signup';
 
@@ -30,6 +31,19 @@ const HomePage = ({ username, setUsername }) => {
       </div>
       <div className='savedBuildsButtonDiv'>
         <SavedBuildsButton />
+=======
+import FormDialog from './Login';
+
+const HomePage = (props) => {
+  const {currentUser, setUser} = props;
+  return (
+    <>
+      <FormDialog currentUser={currentUser} setUser={setUser}/>
+      <h1 className='logo'>KEEBUILDS</h1>
+      <div className='startBuildButtonDiv'>
+        <img src={bongocat} alt="Bongo Cat" />
+        <StartBuild currentUser={currentUser} setUser={setUser}/>
+>>>>>>> 0ee11b98ab680274dc810f74fbe1b002152d9ca7
       </div>
     </>
   );
